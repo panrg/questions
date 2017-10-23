@@ -6,8 +6,7 @@ date:
 category: info
 
 ipr: trust200902
-area: Transport
-workgroup: TAPS Working Group
+workgroup: Path Aware Networking RG
 keyword: Internet-Draft
 
 stand_alone: yes
@@ -53,7 +52,7 @@ packet, and the network layer explicitly exposes information about the path or
 paths available between two endpoints to those endpoints so that they can make
 this selection. Path control at the packet level enables new transport
 protocols that can leverage multipath connectivity even over a single
-interface. 
+interface.
 
 # Questions
 
@@ -64,35 +63,92 @@ future research efforts within the Path Aware Networking Research Group.
 
 ## A Vocabulary of Path Properties
 
-write me
+In order for information about paths to be exposed to the endpoints, and for
+those endpoints to be able to use that information, it is necessary to define
+a common vocabulary for path properties. The elements of this vocabulary could
+include relatively static properties, such as the presence of a given node on
+the path; as well as relatively dynamic properties, such as the current values
+of metrics such as loss and latency.
 
-## Discovery and Dissemination of Path Properties
+This vocabulary must be defined carefully, as its design will have impacts on
+the expressiveness of a given path-aware internetworking architecture. This
+expressiveness also exhibits tradeoffs. For example, a system that exposes
+node-level information for the topology through each network would maximize
+information about the individual components of the path at the endpoints at
+the expense of making internal network topology universally public, which may
+be in conflict with the business goals of each network’s operator.
 
-write me
+The first question is therefore: how are path properties defined and represented?
 
-## Authentication and Trustworthiness of Path Properties
+## Discovery, Distribution, and Trustworthiness of Path Properties
 
-write me
+Once endpoints and networks have a shared vocabulary for expressing path
+properties, the network must have some method for distributing those path
+properties to the endpoint. Regardless of how path property information is
+distributed to the endpoints, the endpoints require a method to authenticate
+the properties -- to determine that they originated from and pertain to the
+path that they purport to. The end goal of authentication is not necessarily
+to establish that a given property is actually bound to a given path, but to
+ensure that the information is trustworthy, that actions taken based on it
+will have the predicted result.
+
+Choices in an distribution and authentication methods will have impacts on the
+scalability of a path-aware architecture. Possible dimensions in the space of
+distribution methods include in-band versus out-of-band, push versus pull
+versus publish-subscribe, and so on. There are temporal issues with path
+property dissemination as well, especially with dynamic properties, since the
+measurement or elicitation of dynamic properties may be outdated by the time
+that information is available at the endpoints, and interactions between the
+measurement and dissemination delay may exhibit pathological behavior for
+unlucky points in the parameter space.
+
+The second question: how do endpoints get access to trustworthy path properties?
 
 ## Supporting Path Selection
 
-write me
+Access to trustworthy path properties is only half of the challenge in
+establishing a path-aware architecture. Endpoints must be able to use this
+information in order to select paths for traffic they send. As with path
+property distribution, choices made in path selection methods will also have
+an impact on the scalability and expressiveness of a path-aware architecture,
+and dimensions included in-band versus out-of-band, as well. Paths may also be
+selected on multiple levels of granularity -- per packet, per flow, per
+aggregate -- and this choice also has impacts on the scalabilty/expressiveness
+tradeoff.
 
-## Authentication and Authorization of Path Selection
-
-write me
+The third question: how can endpoints select paths to use for traffic in a way
+that can be trusted by the network?
 
 ## Interfaces for Path Awareness
 
-write me
+Exposing path selection and path properties only to the endpoint is not
+sufficient to allow the deployment of path-aware transport protocols and
+applications: the interfaces presented by the network and transport layers
+must also expose path properties in a useful way, and provide a useful
+selection for path selection.
 
-## Economics of Path Aware Internetworking
+The fourth question: how can interfaces to the transport and application
+layers support the use of path awareness?
 
-write me
+## Operating a Path Aware Network
+
+The network operations model in the current Internet architecture assumes that
+traffic flows are controlled by the decisions and policies made by network
+operators, as expressed in interdomain routing protocols. In a path-aware
+network with effective path selection, however, this assumption no longer
+holds, as endpoints may react to path properties by selecting alternate paths.
+Competing control inputs from path-aware endpoints and the interdomain routing
+control plane may lead to more difficult traffic engineering or nonconvergent
+routing, especially if the endpoints' and operators' idea of the "best" path
+for given traffic differs significantly.
+
+The fifth question: how can a path aware network in a path aware internetwork
+be effectively operated?
 
 # Acknowledgments
 
-Many thanks to... write me
+Many thanks to Adrian Perrig, Jean-Pierre Smith, Mirja Kuehlewind, and Olivier
+Bonaventure, for discussions leading to questions in this document.
 
 This work is partially supported by the European Commission under Horizon 2020
 grant agreement no. 688421 Measurement and Architecture for a Middleboxed

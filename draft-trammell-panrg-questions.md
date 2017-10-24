@@ -121,11 +121,12 @@ that can be trusted by the network?
 
 ## Interfaces for Path Awareness
 
-Exposing path selection and path properties only to the endpoint is not
-sufficient to allow the deployment of path-aware transport protocols and
-applications: the interfaces presented by the network and transport layers
-must also expose path properties in a useful way, and provide a useful
-selection for path selection.
+In order for applications to make effective use of a path-aware networking
+architecture, the interfaces presented by the network and transport layers
+must also expose path properties to the application in a useful way, and
+provide a useful selection for path selection. Path selection must be possible
+based not only on the preferences and policies of the application developer,
+but of end-users as well.
 
 The fourth question: how can interfaces to the transport and application
 layers support the use of path awareness?

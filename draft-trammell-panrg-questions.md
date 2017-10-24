@@ -29,7 +29,11 @@ informative:
 
 --- abstract
 
-write me
+This document poses open questions in path-aware networking, as a background
+for framing discussions in the Path Aware Networking proposed Research Group
+(PANRG). These are split into making properties of Internet paths available to
+endpoints, and allowing endpoints to select paths through the Internet for
+their traffic.
 
 --- middle
 

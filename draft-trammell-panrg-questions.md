@@ -55,8 +55,11 @@ ability to select or influence the path through the network used by any given
 packet, and the network layer explicitly exposes information about the path or
 paths available between two endpoints to those endpoints so that they can make
 this selection. Path control at the packet level enables new transport
-protocols that can leverage multipath connectivity even over a single
-interface.
+protocols that can leverage multipath connectivity across maximally-disjoing
+paths through the Internet, even over a single interface. It also provides
+transparency and control for applications and end-users to specify constraints
+on the paths its traffic should traverse, for instance to confound pervasive
+passive surveillance in the network core.
 
 # Questions
 
@@ -148,12 +151,30 @@ routing, especially if the endpoints' and operators' idea of the "best" path
 for given traffic differs significantly.
 
 The fifth question: how can a path aware network in a path aware internetwork
-be effectively operated?
+be effectively operated, given control inputs from the network administrator
+as well as from the endpoints?
+
+## Deploying a Path Aware Network
+
+The vision presented in the introduction discusses path aware networking from
+the point of view of the benefits accruing at the endpoints, to designers of
+transport protocols and applications as well as to the end users of those
+applications. However, this vision requires action not only at the endpoints
+but within the interconnected networks offering path aware connectivity. While
+the specific actions required are a matter of the design and implementation of
+a specific realization of a path aware protocol stack, it is clear than any
+path aware architecture will require network operators to give up some control
+of their networks over to endpoint-driven control inputs. The incentives for
+network operators and equipment vendors to do this must be made clear.
+
+The sixth question: how can the incentives of network operators and end-users
+be aligned to realize the vision of path aware networking?
 
 # Acknowledgments
 
-Many thanks to Adrian Perrig, Jean-Pierre Smith, Mirja Kuehlewind, and Olivier
-Bonaventure, for discussions leading to questions in this document.
+Many thanks to Adrian Perrig, Jean-Pierre Smith, Mirja Kuehlewind, Olivier
+Bonaventure, and Martin Thomson, for discussions leading to questions in this
+document.
 
 This work is partially supported by the European Commission under Horizon 2020
 grant agreement no. 688421 Measurement and Architecture for a Middleboxed

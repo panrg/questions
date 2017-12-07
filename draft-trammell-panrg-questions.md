@@ -37,7 +37,7 @@ their traffic.
 
 --- middle
 
-# Introduction to Path-Aware Networking
+# Introduction to Path-Aware Networking {#intro}
 
 In the current Internet architecture, the network layer provides an
 unverifiable, best-effort service: an application can assume that a packet
@@ -138,6 +138,45 @@ but of end-users as well.
 The fourth question: how can interfaces to the transport and application
 layers support the use of path awareness?
 
+## Implications of Path Awareness for the Data Plane
+
+In the current Internet, the basic assumption that at a given time t all
+traffic for a given flow will traverse a single path, for some definition of
+path, generally holds. In a path aware network, this assumption no longer
+holds. The failure of this assumption has implications for the design of
+protocols above a path-aware network layer.
+
+For example, one advantage of multipath communication is that a given
+end-to-end flow can be "sprayed" along multiple paths in order to confound
+attempts to collect data or metadata from those flows for pervasive
+surveillance purposes {{?RFC7624}}. However, the benefits of this approach are
+reduced if the upper-layer protocols use linkable identifiers on packets
+belonging to the same flow across different paths. Clients may mitigate
+linkability by opting to not re-use cleartext connection identifiers, such as
+TLS session IDs or tickets, on separate paths. The privacy-conscious
+strategies required for effective privacy in a path-aware Internet are only
+possible if higher-layer protocols such as TLS permit clients to obtain
+unlinkable identifiers.
+
+The fifth question: how should transport-layer and higher layer protocols be
+redesigned to work most effectively over a path-aware networking layer?
+
+## What is an Endpoint?
+
+The vision of path-aware networking articulated so far makes an assumption
+that path properties will be disseminated to endpoints on which applications
+are running (terminals with user agents, servers, and so on). However,
+incremental deployment may require that a path-aware network "core" be used to
+interconnect islands of legacy protocol networks. In these cases, it is the
+gateways, not the application endpoints, that receive path properties and make
+path selections for that traffic. The interfaces provided this gateway are
+necessarily different than those a path-aware networking layer provides to its
+transport and application layers, and the path property information the
+gateway needs and makes available over those interfaces may also be different.
+
+The sixth question: how is path awareness (in terms of vocabulary and
+interfaces) different when applied to tunnel and overlay endpoints?
+
 ## Operating a Path Aware Network
 
 The network operations model in the current Internet architecture assumes that
@@ -150,7 +189,7 @@ control plane may lead to more difficult traffic engineering or nonconvergent
 routing, especially if the endpoints' and operators' idea of the "best" path
 for given traffic differs significantly.
 
-The fifth question: how can a path aware network in a path aware internetwork
+The seventh question: how can a path aware network in a path aware internetwork
 be effectively operated, given control inputs from the network administrator
 as well as from the endpoints?
 
@@ -167,14 +206,14 @@ path aware architecture will require network operators to give up some control
 of their networks over to endpoint-driven control inputs. The incentives for
 network operators and equipment vendors to do this must be made clear.
 
-The sixth question: how can the incentives of network operators and end-users
+The eighth question: how can the incentives of network operators and end-users
 be aligned to realize the vision of path aware networking?
 
 # Acknowledgments
 
 Many thanks to Adrian Perrig, Jean-Pierre Smith, Mirja Kuehlewind, Olivier
-Bonaventure, and Martin Thomson, for discussions leading to questions in this
-document.
+Bonaventure, Martin Thomson, Shwetha Bhandari, and Chris Wood, for discussions
+leading to questions in this document.
 
 This work is partially supported by the European Commission under Horizon 2020
 grant agreement no. 688421 Measurement and Architecture for a Middleboxed

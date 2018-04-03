@@ -39,8 +39,8 @@ their traffic.
 
 # Introduction to Path-Aware Networking {#intro}
 
-In the current Internet architecture, the network layer provides an
-unverifiable, best-effort service: an application can assume that a packet
+In the current Internet architecture, the interdomain network layer provides
+an unverifiable, best-effort service: an application can assume that a packet
 with a given destination address will eventually be forwarded toward that
 destination, but little else. A transport layer protocol such as TCP can
 provide reliability over this best-effort service, and a protocol above the
@@ -50,16 +50,24 @@ path is available, and assumptions about that path sometimes do not hold,
 sometimes with serious impacts on the application, as in the case with BGP
 hijacking attacks.
 
-By contrast, in a path-aware networking architecture, endpoints have the
+By contrast, in a path-aware internetworking architecture, endpoints have the
 ability to select or influence the path through the network used by any given
 packet, and the network layer explicitly exposes information about the path or
 paths available between two endpoints to those endpoints so that they can make
 this selection. Path control at the packet level enables new transport
-protocols that can leverage multipath connectivity across maximally-disjoing
+protocols that can leverage multipath connectivity across maximally-disjoint
 paths through the Internet, even over a single interface. It also provides
 transparency and control for applications and end-users to specify constraints
 on the paths its traffic should traverse, for instance to confound pervasive
 passive surveillance in the network core.
+
+We note that this property of "path awareness" already exists in many
+Internet-connected networks in an intradomain context. Indeed, much of the
+practice of network engineering using encapsulation at layer 3 can be said to
+be "path aware", in that it explicitly assigns traffic at tunnel endpoints to
+a given path within the network. Path-aware internetworking seeks to extend
+this awareness across domain boundaries without resorting to overlays, except
+as a transition technology.
 
 # Questions
 

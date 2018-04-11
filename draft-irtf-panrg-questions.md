@@ -1,7 +1,7 @@
 ---
 title: Open Questions in Path Aware Networking
 abbrev: PAN questions
-docname: draft-trammell-panrg-questions-latest
+docname: draft-irtf-panrg-questions-latest
 date:
 category: info
 

@@ -2,9 +2,9 @@
 
 This is the working area for the individual Internet-Draft, "Open Questions in Path Aware Networking".
 
-* [Editor's Copy](https://britram.github.io/draft-trammell-panrg-questions/#go.draft-trammell-panrg-questions.html)
+* [Editor's Copy](https://britram.github.io/draft-trammell-panrg-questions/#go.draft-irtf-panrg-questions.html)
 * [Working Group Draft](https://tools.ietf.org/html/draft-trammell-panrg-questions)
-* [Compare Editor's Copy to Working Group Draft](https://britram.github.io/draft-trammell-panrg-questions/#go.draft-trammell-panrg-questions.diff)
+* [Compare Editor's Copy to Working Group Draft](https://britram.github.io/draft-trammell-panrg-questions/#go.draft-irtf-panrg-questions.diff)
 
 ## Building the Draft
 

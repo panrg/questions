@@ -129,7 +129,7 @@ tradeoff. Path selection must, like path property information, be trustworthy,
 such that the result of a path selection at an endpoint is predictable.
 
 The third question: how can endpoints select paths to use for traffic in a way
-that can be trusted by the both the network and the endpoints?
+that can be trusted by both the network and the endpoints?
 
 ## Interfaces for Path Awareness
 

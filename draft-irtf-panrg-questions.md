@@ -16,10 +16,10 @@ author:
   -
     ins: B. Trammell
     name: Brian Trammell
-    org: ETH Zurich
+    org: Google
     email: ietf@trammell.ch
-    street: Gloriastrasse 35
-    city: 8092 Zurich
+    street: Gustav-Gull-Platz 1
+    city: 8004 Zurich
     country: Switzerland
 
 normative:
@@ -30,9 +30,10 @@ informative:
 
 This document poses open questions in path-aware networking, as a background
 for framing discussions in the Path Aware Networking proposed Research Group
-(PANRG). These are split into making properties of Internet paths available to
-endpoints, and allowing endpoints to select paths through the Internet for
-their traffic.
+(PANRG). Path-aware networking has two aspects: the exposure of properties of
+available Internet paths to endpoints and applications running on them, 
+and allowing endpoints and applications to use these properties to select 
+paths through the Internet for their traffic.
 
 --- middle
 
@@ -51,14 +52,19 @@ hijacking attacks.
 
 By contrast, in a path-aware internetworking architecture, endpoints have the
 ability to select or influence the path through the network used by any given
-packet, and the network layer explicitly exposes information about the path or
-paths available between two endpoints to those endpoints so that they can make
-this selection. Path control at the packet level enables new transport
-protocols that can leverage multipath connectivity across maximally-disjoint
-paths through the Internet, even over a single interface. It also provides
-transparency and control for applications and end-users to specify constraints
-on the paths that traffic should traverse, for instance to confound pervasive
-passive surveillance in the network core.
+packet, and the network and transport layers explicitly expose information
+about the path or paths available between two endpoints to those endpoints and
+the applications running on them, so that they can make this selection.
+
+Path selection provides transparency and control to applications and users of
+the network. Selection may be made at either the application layer or the
+transport layer. Path control at the packet level enables the design of new
+transport protocols that can leverage multipath connectivity across
+maximally-disjoint paths through the Internet, even over a single physical
+interface.  When exposed to applications, or to end-users through a system
+configuration interface, path control allows the specification of constraints
+on the paths that traffic should traverse, for instance to confound passive
+surveillance in the network core.
 
 We note that this property of "path awareness" already exists in many
 Internet-connected networks in an intradomain context. Indeed, much of the
@@ -77,12 +83,12 @@ future research efforts within the Path Aware Networking Research Group.
 
 ## A Vocabulary of Path Properties
 
-In order for information about paths to be exposed to the endpoints, and for
-those endpoints to be able to use that information, it is necessary to define
+In order for information about paths to be exposed to an endpoint, and for
+the endpoint to make use of that information, it is necessary to define
 a common vocabulary for path properties. The elements of this vocabulary could
-include relatively static properties, such as the presence of a given node on
-the path; as well as relatively dynamic properties, such as the current values
-of metrics such as loss and latency.
+include relatively static properties, such as the presence of a given node or
+service function on the path; as well as relatively dynamic properties, such as
+the current values of metrics such as loss and latency.
 
 This vocabulary must be defined carefully, as its design will have impacts on
 the expressiveness of a given path-aware internetworking architecture. This
@@ -90,7 +96,7 @@ expressiveness also exhibits tradeoffs. For example, a system that exposes
 node-level information for the topology through each network would maximize
 information about the individual components of the path at the endpoints at
 the expense of making internal network topology universally public, which may
-be in conflict with the business goals of each network’s operator.
+be in conflict with the business goals of each network's operator.
 
 The first question: how are path properties defined and represented?
 
@@ -119,14 +125,15 @@ The second question: how do endpoints get access to trustworthy path properties?
 
 Access to trustworthy path properties is only half of the challenge in
 establishing a path-aware architecture. Endpoints must be able to use this
-information in order to select paths for traffic they send. As with path
-property distribution, choices made in path selection methods will also have
-an impact on the scalability and expressiveness of a path-aware architecture,
-and dimensions included in-band versus out-of-band, as well. Paths may also be
-selected on multiple levels of granularity -- per packet, per flow, per
-aggregate -- and this choice also has impacts on the scalabilty/expressiveness
-tradeoff. Path selection must, like path property information, be trustworthy,
-such that the result of a path selection at an endpoint is predictable.
+information in order to select paths for traffic they send. As with the
+dissemination of path properties, choices made in path selection methods will
+also have an impact on the tradeoff between scalability and expressiveness of a
+path-aware architecture. One key choice here is between in-band and
+out-of-band control of path selection. Another is granularity of path selection
+(whether per packet, per flow, or per larger aggregate), which also has a large
+impact on the scalabilty/expressiveness tradeoff. Path selection must, like
+path property information, be trustworthy, such that the result of a path
+selection at an endpoint is predictable.
 
 The third question: how can endpoints select paths to use for traffic in a way
 that can be trusted by both the network and the endpoints?
@@ -134,16 +141,15 @@ that can be trusted by both the network and the endpoints?
 ## Interfaces for Path Awareness
 
 In order for applications to make effective use of a path-aware networking
-architecture, the interfaces presented by the network and transport layers
-must also expose path properties to the application in a useful way, and
+architecture, the control interfaces presented by the network and transport
+layers must also expose path properties to the application in a useful way, and
 provide a useful set of paths among which the application can select. Path
 selection must be possible based not only on the preferences and policies of
 the application developer, but of end-users as well. Also, the path selection
 interfaces presented to applications and end users will need to support
 multiple levels of granularity. Most applications' requirements can be
-satisfied with the expression path selection policies in terms of properties
-of the paths, while some applications may need finer-grained, per-path
-control.
+satisfied with the expression path selection policies in terms of properties of
+the paths, while some applications may need finer-grained, per-path control.
 
 The fourth question: how can interfaces to the transport and application
 layers support the use of path awareness?
@@ -196,7 +202,7 @@ providing path selection to the endpoints, however, this assumption no longer
 holds, as endpoints may react to path properties by selecting alternate paths.
 Competing control inputs from path-aware endpoints and the interdomain routing
 control plane may lead to more difficult traffic engineering or nonconvergent
-routing, especially if the endpoints' and operators' notion of the "best" path
+forwarding, especially if the endpoints' and operators' notion of the "best" path
 for given traffic diverges significantly.
 
 A concept for path aware network operations will need to have clear methods
@@ -240,8 +246,9 @@ be aligned to realize the vision of path aware networking?
 # Acknowledgments
 
 Many thanks to Adrian Perrig, Jean-Pierre Smith, Mirja Kuehlewind, Olivier
-Bonaventure, Martin Thomson, Shwetha Bhandari, Chris Wood, and Lee Howard, for
-discussions leading to questions in this document.
+Bonaventure, Martin Thomson, Shwetha Bhandari, Chris Wood, Lee Howard, and
+Mohamed Boucadair for discussions leading to questions in this document, and for
+feedback on the document itself. 
 
 This work is partially supported by the European Commission under Horizon 2020
 grant agreement no. 688421 Measurement and Architecture for a Middleboxed

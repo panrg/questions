@@ -30,7 +30,7 @@ informative:
 
 This document poses open questions in path-aware networking, as a background
 for framing discussions in the Path Aware Networking proposed Research Group
-(PANRG). Path-aware networking has two aspects: the exposure of properties of
+(PANRG). Path-aware networking has two aspects: exposing properties of
 available Internet paths to endpoints and applications running on them, 
 and allowing endpoints and applications to use these properties to select 
 paths through the Internet for their traffic.
@@ -236,19 +236,24 @@ protocols. Incentives for deployment must show how existing network operations
 requirements are met through new path selection and property dissemination
 mechanisms.
 
-The incentives for network operators and equipment vendors to do provide  be
-made clear, in terms of a plan to transition {{?RFC8170}} an internetwork to
-path-aware operation, one network and facility at a time.
+The incentives for network operators and equipment vendors need to be made
+clear, in terms of a plan to transition {{?RFC8170}} an internetwork to
+path-aware operation, one network and facility at a time. This plan to
+transition must also take into account that the dynamics of path aware
+networking early in this transition (when few endpoints and flows in the
+Internet use path selection) may be different than those later in the
+transition.
 
 The eighth question: how can the incentives of network operators and end-users
-be aligned to realize the vision of path aware networking?
+be aligned to realize the vision of path aware networking, and how can the
+transition from current ("path-oblivious") to path-aware networking be managed?
 
 # Acknowledgments
 
 Many thanks to Adrian Perrig, Jean-Pierre Smith, Mirja Kuehlewind, Olivier
-Bonaventure, Martin Thomson, Shwetha Bhandari, Chris Wood, Lee Howard, and
-Mohamed Boucadair for discussions leading to questions in this document, and for
-feedback on the document itself. 
+Bonaventure, Martin Thomson, Shwetha Bhandari, Chris Wood, Lee Howard, Mohamed
+Boucadair, and Thorben Krueger for discussions leading to questions in this
+document, and for feedback on the document itself. 
 
 This work is partially supported by the European Commission under Horizon 2020
 grant agreement no. 688421 Measurement and Architecture for a Middleboxed

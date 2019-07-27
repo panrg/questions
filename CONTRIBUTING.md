@@ -20,12 +20,9 @@ subject to a Simplified BSD License) in Contributions.
 ## Other Resources
 
 Discussion of this work occurs on the
-[panrg working group mailing list](https://mailarchive.ietf.org/arch/browse/panrg/)
+[Path Aware Networking research group mailing list](https://mailarchive.ietf.org/arch/browse/panrg/)
 ([subscribe](https://www.ietf.org/mailman/listinfo/panrg)).  In addition to
 contributions in github, you are encouraged to participate in discussions there.
 
-**Note**: Some working groups adopt a policy whereby substantive discussion of
-technical issues needs to occur on the mailing list.
-
 You might also like to familiarize yourself with other
-[working group documents](https://datatracker.ietf.org/wg/panrg/documents/).
+[research group documents](https://datatracker.ietf.org/rg/panrg/documents/).

@@ -1,4 +1,4 @@
 # License
 
 See the
-[guidelines for contributions](https://github.com/britram/draft-trammell-panrg-questions/blob/master/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/panrg/questions/blob/master/CONTRIBUTING.md).

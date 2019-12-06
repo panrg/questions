@@ -98,7 +98,11 @@ expressiveness also exhibits tradeoffs. For example, a system that exposes
 node-level information for the topology through each network would maximize
 information about the individual components of the path at the endpoints at
 the expense of making internal network topology universally public, which may
-be in conflict with the business goals of each network's operator.
+be in conflict with the business goals of each network's operator. Furthermore,
+properties related to individual components of the path may change frequently
+and may quickly become outdated. However, aggregating the properties of
+individual components to distill end-to-end properties for the entire path is
+not trivial.
 
 The first question: how are path properties defined and represented?
 

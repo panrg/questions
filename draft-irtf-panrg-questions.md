@@ -1,5 +1,5 @@
 ---
-title: Open Questions in Path Aware Networking
+title: Current Open Questions in Path Aware Networking
 abbrev: PAN questions
 docname: draft-irtf-panrg-questions-latest
 date:
@@ -28,12 +28,15 @@ informative:
 
 --- abstract
 
-This document poses open questions in path-aware networking, as a background
-for framing discussions in the Path Aware Networking proposed Research Group
-(PANRG). Path-aware networking has two aspects: exposing properties of
-available Internet paths to endpoints and applications running on them, 
-and allowing endpoints and applications to use these properties to select 
-paths through the Internet for their traffic.
+In contrast to the present Internet architecture, a path-aware internetworking
+architecture has two important properties: it exposes the properties of
+available Internet paths to endpoints, and provides for endpoints and
+applications to use these properties to select paths through the Internet for
+their traffic. This document poses questions in path-aware networking open as of
+2019, that must be answered in the design, development, and deployment of
+path-aware intetnetworks. It was originally written to frame discussions in the
+Path Aware Networking proposed Research Group (PANRG), and has been published to
+snapshot current thinking in this space.
 
 --- middle
 

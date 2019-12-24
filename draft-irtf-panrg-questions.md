@@ -85,10 +85,12 @@ future research efforts within the Path Aware Networking Research Group.
 
 In order for information about paths to be exposed to an endpoint, and for
 the endpoint to make use of that information, it is necessary to define
-a common vocabulary for path properties. The elements of this vocabulary could
-include relatively static properties, such as the presence of a given node or
-service function on the path; as well as relatively dynamic properties, such as
-the current values of metrics such as loss and latency.
+a common vocabulary for path properties and paths. The elements of this
+vocabulary could include terminology for components of a path and properties
+defined for these components and/or for the entire path. Such properties may
+be relatively static, such as the presence of a given node or service function
+on the path; as well as relatively dynamic, such as the current values of
+metrics such as loss and latency.
 
 This vocabulary must be defined carefully, as its design will have impacts on
 the expressiveness of a given path-aware internetworking architecture. This
@@ -96,7 +98,11 @@ expressiveness also exhibits tradeoffs. For example, a system that exposes
 node-level information for the topology through each network would maximize
 information about the individual components of the path at the endpoints at
 the expense of making internal network topology universally public, which may
-be in conflict with the business goals of each network's operator.
+be in conflict with the business goals of each network's operator. Furthermore,
+properties related to individual components of the path may change frequently
+and may quickly become outdated. However, aggregating the properties of
+individual components to distill end-to-end properties for the entire path is
+not trivial.
 
 The first question: how are path properties defined and represented?
 

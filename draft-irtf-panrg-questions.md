@@ -77,6 +77,12 @@ a given path within the network. Path-aware internetworking seeks to extend
 this awareness across domain boundaries without resorting to overlays, except
 as a transition technology.
 
+For purposes of this document, a path aware internetwork is one in which
+endpoint discovery of path properties and endpoint selection of paths used by
+traffic exchanged by the endpoint are explicitly supported, regardless of the
+specific design of the protocol features which enable this discovery and
+selection.
+
 # Questions
 
 Realizing path-aware networking requires answers to a set of open research
@@ -153,19 +159,21 @@ In order for applications to make effective use of a path-aware networking
 architecture, the control interfaces presented by the network and transport
 layers must also expose path properties to the application in a useful way, and
 provide a useful set of paths among which the application can select. Path
-selection must be possible based not only on the preferences and policies of
-the application developer, but of end-users as well. Also, the path selection
-interfaces presented to applications and end users will need to support
-multiple levels of granularity. Most applications' requirements can be
-satisfied with the expression path selection policies in terms of properties of
-the paths, while some applications may need finer-grained, per-path control.
+selection must be possible based not only on the preferences and policies of the
+application developer, but of end-users as well. Also, the path selection
+interfaces presented to applications and end users will need to support multiple
+levels of granularity. Most applications' requirements can be satisfied with the
+expression path selection policies in terms of properties of the paths, while
+some applications may need finer-grained, per-path control. These interfaces
+will need to support incremental development and deployment of applications, and
+provide sensible defaults, to avoid hindering their adoption.
 
 The fourth question: how can interfaces to the transport and application
 layers support the use of path awareness?
 
 ## Implications of Path Awareness for the Data Plane
 
-In the current Internet, the basic assumption that at a given time t all
+In the current Internet, the basic assumption that at a given time all
 traffic for a given flow will traverse a single path, for some definition of
 path, generally holds. In a path aware network, this assumption no longer
 holds. The absence of this assumption has implications for the design of
@@ -261,8 +269,9 @@ transition from current ("path-oblivious") to path-aware networking be managed?
 
 Many thanks to Adrian Perrig, Jean-Pierre Smith, Mirja Kuehlewind, Olivier
 Bonaventure, Martin Thomson, Shwetha Bhandari, Chris Wood, Lee Howard, Mohamed
-Boucadair, and Thorben Krueger for discussions leading to questions in this
-document, and for feedback on the document itself. 
+Boucadair, Thorben Krueger, Gorry Fairhurst, Spencer Dawkins, and Theresa Enghardt 
+for discussions leading to questions in this document, and for feedback on the 
+document itself. 
 
 This work is partially supported by the European Commission under Horizon 2020
 grant agreement no. 688421 Measurement and Architecture for a Middleboxed

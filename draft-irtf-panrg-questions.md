@@ -42,35 +42,36 @@ snapshot current thinking in this space.
 
 # Introduction to Path-Aware Networking {#intro}
 
-In the current Internet architecture, the interdomain network layer provides
+In the current Internet architecture, the network layer provides
 an unverifiable, best-effort service: an application can assume that a packet
 with a given destination address will eventually be forwarded toward that
 destination, but little else. A transport layer protocol such as TCP can
 provide reliability over this best-effort service, and a protocol above the
 network layer such as IPsec AH {{!RFC4302}} or TLS {{!RFC5246}} can
-authenticate the remote endpoint. However, no explicit information about the
-path is available, and assumptions about that path sometimes do not hold,
-sometimes with serious impacts on the application, as in the case with BGP
-hijacking attacks.
+authenticate the remote endpoint. However, little, if any, explicit 
+information about the path is available, and assumptions about that path 
+often do not hold, sometimes with serious impacts on the application, 
+as in the case with BGP hijacking attacks.
 
 By contrast, in a path-aware internetworking architecture, endpoints have the
 ability to select or influence the path through the network used by any given
 packet, and the network and transport layers explicitly expose information
-about the path or paths available between two endpoints to those endpoints and
-the applications running on them, so that they can make this selection.
+about the path or paths available from one endpoint to another, and vice versa,
+to those endpoints and the applications running on them, so that they can 
+make this selection.
 
 Path selection provides transparency and control to applications and users of
 the network. Selection may be made at either the application layer or the
 transport layer. Path control at the packet level enables the design of new
 transport protocols that can leverage multipath connectivity across
-maximally-disjoint paths through the Internet, even over a single physical
+disjoint paths through the Internet, even over a single physical
 interface.  When exposed to applications, or to end-users through a system
 configuration interface, path control allows the specification of constraints
 on the paths that traffic should traverse, for instance to confound passive
-surveillance in the network core.
+surveillance in the network core {{?RFC7624}}.
 
 We note that this property of "path awareness" already exists in many
-Internet-connected networks in an intradomain context. Indeed, much of the
+Internet-connected networks within single domains. Indeed, much of the
 practice of network engineering using encapsulation at layer 3 can be said to
 be "path aware", in that it explicitly assigns traffic at tunnel endpoints to
 a given path within the network. Path-aware internetworking seeks to extend
@@ -144,13 +145,14 @@ that information is available at the endpoints, and interactions between the
 measurement and dissemination delay may exhibit pathological behavior for
 unlucky points in the parameter space.
 
-The second question: how do endpoints get access to trustworthy path properties?
+The second question: how do endpoints and applications get access to trustworthy 
+path properties?
 
 ## Supporting Path Selection
 
 Access to trustworthy path properties is only half of the challenge in
 establishing a path-aware architecture. Endpoints must be able to use this
-information in order to select paths for traffic they send. As with the
+information in order to select paths for specific traffic they send. As with the
 dissemination of path properties, choices made in path selection methods will
 also have an impact on the tradeoff between scalability and expressiveness of a
 path-aware architecture. One key choice here is between in-band and
@@ -161,7 +163,7 @@ path property information, be trustworthy, such that the result of a path
 selection at an endpoint is predictable.
 
 The third question: how can endpoints select paths to use for traffic in a way
-that can be trusted by both the network and the endpoints?
+that can be trusted by the network, the endpoints, and the applications using them?
 
 ## Interfaces for Path Awareness
 
@@ -184,10 +186,10 @@ layers support the use of path awareness?
 ## Implications of Path Awareness for the Data Plane
 
 In the current Internet, the basic assumption that at a given time all
-traffic for a given flow will traverse a single path, for some definition of
-path, generally holds. In a path aware network, this assumption no longer
-holds. The absence of this assumption has implications for the design of
-protocols above any path-aware network layer.
+traffic for a given flow will receive the same network treatment and traverse
+the same path or equivalend paths often holds. In a path aware network, 
+this assumption is more easily violated holds. The weakening of this assumption 
+has implications for the design of protocols above any path-aware network layer.
 
 For example, one advantage of multipath communication is that a given
 end-to-end flow can be "sprayed" along multiple paths in order to confound
@@ -224,13 +226,16 @@ interfaces) different when applied to tunnel and overlay endpoints?
 
 The network operations model in the current Internet architecture assumes that
 traffic flows are controlled by the decisions and policies made by network
-operators, as expressed in interdomain routing protocols. In a network
-providing path selection to the endpoints, however, this assumption no longer
-holds, as endpoints may react to path properties by selecting alternate paths.
-Competing control inputs from path-aware endpoints and the interdomain routing
+operators, as expressed in interdomain and intradomain routing protocols. In
+a network providing path selection to the endpoints, however, this assumption 
+no longer holds, as endpoints may react to path properties by selecting 
+alternate paths. Competing control inputs from path-aware endpoints and the routing
 control plane may lead to more difficult traffic engineering or nonconvergent
 forwarding, especially if the endpoints' and operators' notion of the "best" path
-for given traffic diverges significantly.
+for given traffic diverges significantly. The degree of difficulty may depend on
+the fidelity of information made available to path selection algorithms at
+the endpoints. Explicit path selection can also specify
+outbound paths, while BGP policies are expressed in terms of inbound traffic.
 
 A concept for path aware network operations will need to have clear methods
 for the resolution of apparent (if not actual) conflicts of intent between the

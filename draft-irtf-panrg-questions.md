@@ -34,7 +34,7 @@ available Internet paths to endpoints, and provides for endpoints and
 applications to use these properties to select paths through the Internet for
 their traffic. This document poses questions in path-aware networking open as of
 2019, that must be answered in the design, development, and deployment of
-path-aware intetnetworks. It was originally written to frame discussions in the
+path-aware internetworks. It was originally written to frame discussions in the
 Path Aware Networking proposed Research Group (PANRG), and has been published to
 snapshot current thinking in this space.
 
@@ -47,7 +47,7 @@ an unverifiable, best-effort service: an application can assume that a packet
 with a given destination address will eventually be forwarded toward that
 destination, but little else. A transport layer protocol such as TCP can
 provide reliability over this best-effort service, and a protocol above the
-network layer such as IPsec AH {{?RFC4302}} or TLS {{?RFC5246}} can
+network layer such as IPsec AH {{?RFC4302}} or TLS {{?RFC8446}} can
 authenticate the remote endpoint. However, no explicit information about the
 path is available, and assumptions about that path sometimes do not hold,
 sometimes with serious impacts on the application, as in the case with BGP
@@ -158,7 +158,9 @@ out-of-band control of path selection. Another is granularity of path selection
 (whether per packet, per flow, or per larger aggregate), which also has a large
 impact on the scalabilty/expressiveness tradeoff. Path selection must, like
 path property information, be trustworthy, such that the result of a path
-selection at an endpoint is predictable.
+selection at an endpoint is predictable. Moreover, any path selection mechanism 
+should aim to provide an outcome that is not worse than using a single path, or 
+selecting paths at random.
 
 The third question: how can endpoints select paths to use for traffic in a way
 that can be trusted by both the network and the endpoints?

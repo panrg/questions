@@ -78,6 +78,8 @@ a given path within the network. Path-aware internetworking seeks to extend
 this awareness across domain boundaries without resorting to overlays, except
 as a transition technology.
 
+## Definition
+
 For purposes of this document, "path aware networking" describes endpoint 
 discovery of the properties of paths they use for communication, and endpoint 
 reaction to these properties that affects routing and/or transmission; note 

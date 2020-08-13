@@ -47,7 +47,7 @@ an unverifiable, best-effort service: an application can assume that a packet
 with a given destination address will eventually be forwarded toward that
 destination, but little else. A transport layer protocol such as TCP can
 provide reliability over this best-effort service, and a protocol above the
-network layer such as IPsec AH {{!RFC4302}} or TLS {{!RFC5246}} can
+network layer such as IPsec AH {{?RFC4302}} or TLS {{?RFC5246}} can
 authenticate the remote endpoint. However, no explicit information about the
 path is available, and assumptions about that path sometimes do not hold,
 sometimes with serious impacts on the application, as in the case with BGP

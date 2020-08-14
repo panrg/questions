@@ -192,7 +192,7 @@ layers support the use of path awareness?
 In the current Internet, the basic assumption that at a given time all
 traffic for a given flow will receive the same network treatment and traverse
 the same path or equivalend paths often holds. In a path aware network, 
-this assumption is more easily violated holds. The weakening of this assumption 
+this assumption is more easily violated. The weakening of this assumption 
 has implications for the design of protocols above any path-aware network layer.
 
 For example, one advantage of multipath communication is that a given

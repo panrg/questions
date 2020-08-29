@@ -33,7 +33,7 @@ architecture has two important properties: it exposes the properties of
 available Internet paths to endpoints, and provides for endpoints and
 applications to use these properties to select paths through the Internet for
 their traffic. This document poses questions in path-aware networking open as of
-2019, that must be answered in the design, development, and deployment of
+2020, that must be answered in the design, development, and deployment of
 path-aware internetworks. It was originally written to frame discussions in the
 Path Aware Networking proposed Research Group (PANRG), and has been published to
 snapshot current thinking in this space.
@@ -77,6 +77,12 @@ be "path aware", in that it explicitly assigns traffic at tunnel endpoints to
 a given path within the network. Path-aware internetworking seeks to extend
 this awareness across domain boundaries without resorting to overlays, except
 as a transition technology.
+
+This document presents a snapshot of open questions in this space that will
+need to be answered in order to realize a path-aware internetworking
+architecture; it is published to further frame discussions within and outside
+the Path Aware Networking Research Group, and is published with the rough
+consensus of that group.
 
 ## Definition
 

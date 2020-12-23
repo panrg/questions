@@ -32,7 +32,12 @@ In contrast to the present Internet architecture, a path-aware internetworking
 architecture has two important properties: it exposes the properties of
 available Internet paths to endpoints, and provides for endpoints and
 applications to use these properties to select paths through the Internet for
-their traffic. This document poses questions in path-aware networking open as of
+their traffic. While this property of "path awareness" already exists in many
+Internet-connected networks within single domains and via administrative
+interfaces to the network layer, a fully path-aware internetwork expands these
+concepts across layers and across the Internet.
+
+This document poses questions in path-aware networking open as of
 2020, that must be answered in the design, development, and deployment of
 path-aware internetworks. It was originally written to frame discussions in the
 Path Aware Networking proposed Research Group (PANRG), and has been published to
@@ -43,26 +48,36 @@ snapshot current thinking in this space.
 # Introduction to Path-Aware Networking {#intro}
 
 In the current Internet architecture, the network layer provides
-an unverifiable, best-effort service: an application can assume that a packet
+an unverifiable, best-effort service to the endpoints using it. While
+there are technologies that attempt better-than-best-effort delivery, 
+the interfaces to these are generally administrative as opposed to 
+endpoint-exposed (e.g. PCE {{?RFC4655}} and SD-WAN approaches), 
+and they are often restricted to single administrative domains. 
+In this environment, an application can assume that a packet 
 with a given destination address will eventually be forwarded toward that
-destination, but little else. A transport layer protocol such as TCP can
+destination, but little else. 
+
+A transport layer protocol such as TCP can
 provide reliability over this best-effort service, and a protocol above the
 network layer such as IPsec AH {{?RFC4302}} or TLS {{?RFC8446}} can
-authenticate the remote endpoint. However, little, if any, explicit 
-information about the path is available, and assumptions about that path 
-often do not hold, sometimes with serious impacts on the application, 
+authenticate the remote endpoint. However, little, if any, explicit
+information about the path is available to the endpoint, and assumptions about
+that path often do not hold, sometimes with serious impacts on the application, 
 as in the case with BGP hijacking attacks.
 
 By contrast, in a path-aware internetworking architecture, endpoints have the
 ability to select or influence the path through the network used by any given
-packet, and the network and transport layers explicitly expose information
-about the path or paths available from one endpoint to another, and vice versa,
+packet or flow. The network and transport layers explicitly expose information
+about the path or paths available from one endpoint to another, and 
 to those endpoints and the applications running on them, so that they can 
-make this selection.
+make this selection. The ALTO protocol {{?RFC7285}} can be seen as an example
+of a path-awareness approach implemented in transport-layer terms on the
+present Internet protocol stack.
 
-Path selection provides transparency and control to applications and users of
-the network. Selection may be made at either the application layer or the
-transport layer. Path control at the packet level enables the design of new
+Path selection provides explicit visibility and control of network treatment
+to applications and users of the network. This selection is available to the
+application, transport, and/or network layer entities at each endpoint.
+Path control at the flow and subflow level enables the design of new
 transport protocols that can leverage multipath connectivity across
 disjoint paths through the Internet, even over a single physical
 interface.  When exposed to applications, or to end-users through a system

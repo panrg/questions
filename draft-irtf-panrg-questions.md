@@ -37,84 +37,86 @@ Internet-connected networks within single domains and via administrative
 interfaces to the network layer, a fully path-aware internetwork expands these
 concepts across layers and across the Internet.
 
-This document poses questions in path-aware networking open as of
-2020, that must be answered in the design, development, and deployment of
-path-aware internetworks. It was originally written to frame discussions in the
-Path Aware Networking proposed Research Group (PANRG), and has been published to
-snapshot current thinking in this space.
+This document poses questions in path-aware networking open as of 2021, that
+must be answered in the design, development, and deployment of path-aware
+internetworks. It was originally written to frame discussions in the Path Aware
+Networking proposed Research Group (PANRG), and has been published to snapshot
+current thinking in this space.
 
 --- middle
 
 # Introduction to Path-Aware Networking {#intro}
 
-In the current Internet architecture, the network layer provides
-an unverifiable, best-effort service to the endpoints using it. While
-there are technologies that attempt better-than-best-effort delivery, 
-the interfaces to these are generally administrative as opposed to 
-endpoint-exposed (e.g. PCE {{?RFC4655}} and SD-WAN approaches), 
-and they are often restricted to single administrative domains. 
-In this environment, an application can assume that a packet 
-with a given destination address will eventually be forwarded toward that
-destination, but little else. 
+In the current Internet architecture, the network layer provides an
+unverifiable, best-effort service to the endpoints using it. While there are
+technologies that attempt better-than-best-effort delivery, the interfaces to
+these are generally administrative as opposed to endpoint-exposed (e.g. PCE
+{{?RFC4655}} and SD-WAN approaches), and they are often restricted to single
+administrative domains. In this environment, an application can assume that a
+packet with a given destination address will eventually be forwarded toward that
+destination, but little else.
 
-A transport layer protocol such as TCP can
-provide reliability over this best-effort service, and a protocol above the
-network layer such as IPsec AH {{?RFC4302}} or TLS {{?RFC8446}} can
-authenticate the remote endpoint. However, little, if any, explicit
-information about the path is available to the endpoint, and assumptions about
-that path often do not hold, sometimes with serious impacts on the application, 
-as in the case with BGP hijacking attacks.
+A transport layer protocol such as TCP can provide reliability over this
+best-effort service, and a protocol above the network layer such as IPsec AH
+{{?RFC4302}} or TLS {{?RFC8446}} can authenticate the remote endpoint. However,
+little, if any, explicit information about the path is available to the
+endpoint, and assumptions about that path often do not hold, sometimes with
+serious impacts on the application, as in the case with BGP hijacking attacks.
 
 By contrast, in a path-aware internetworking architecture, endpoints have the
 ability to select or influence the path through the network used by any given
 packet or flow. The network and transport layers explicitly expose information
-about the path or paths available from one endpoint to another, and 
-to those endpoints and the applications running on them, so that they can 
-make this selection. The ALTO protocol {{?RFC7285}} can be seen as an example
-of a path-awareness approach implemented in transport-layer terms on the
-present Internet protocol stack.
+about the path or paths available from one endpoint to another, and to those
+endpoints and the applications running on them, so that they can make this
+selection. The ALTO protocol {{?RFC7285}} can be seen as an example of a
+path-awareness approach implemented in transport-layer terms on the present
+Internet protocol stack.
 
-Path selection provides explicit visibility and control of network treatment
-to applications and users of the network. This selection is available to the
-application, transport, and/or network layer entities at each endpoint.
-Path control at the flow and subflow level enables the design of new
-transport protocols that can leverage multipath connectivity across
-disjoint paths through the Internet, even over a single physical
-interface.  When exposed to applications, or to end-users through a system
-configuration interface, path control allows the specification of constraints
-on the paths that traffic should traverse, for instance to confound passive
-surveillance in the network core {{?RFC7624}}.
+Path selection provides explicit visibility and control of network treatment to
+applications and users of the network. This selection is available to the
+application, transport, and/or network layer entities at each endpoint. Path
+control at the flow and subflow level enables the design of new transport
+protocols that can leverage multipath connectivity across disjoint paths through
+the Internet, even over a single physical interface.  When exposed to
+applications, or to end-users through a system configuration interface, path
+control allows the specification of constraints on the paths that traffic should
+traverse, for instance to confound passive surveillance in the network core
+{{?RFC7624}}.
 
 We note that this property of "path awareness" already exists in many
-Internet-connected networks within single domains. Indeed, much of the
-practice of network engineering using encapsulation at layer 3 can be said to
-be "path aware", in that it explicitly assigns traffic at tunnel endpoints to
-a given path within the network. Path-aware internetworking seeks to extend
-this awareness across domain boundaries without resorting to overlays, except
-as a transition technology.
+Internet-connected networks within single domains. Indeed, much of the practice
+of network engineering using encapsulation at layer 3 can be said to be "path
+aware", in that it explicitly assigns traffic at tunnel endpoints to a given
+path within the network. Path-aware internetworking seeks to extend this
+awareness across domain boundaries without resorting to overlays, except as a
+transition technology.
 
-This document presents a snapshot of open questions in this space that will
-need to be answered in order to realize a path-aware internetworking
-architecture; it is published to further frame discussions within and outside
-the Path Aware Networking Research Group, and is published with the rough
-consensus of that group.
+This document presents a snapshot of open questions in this space that will need
+to be answered in order to realize a path-aware internetworking architecture; it
+is published to further frame discussions within and outside the Path Aware
+Networking Research Group, and is published with the rough consensus of that
+group.
 
 ## Definition
 
-For purposes of this document, "path aware networking" describes endpoint 
-discovery of the properties of paths they use for communication, and endpoint 
-reaction to these properties that affects routing and/or transmission; note 
-that this can and already does happen to some extent in the current
-Internet architecture. Expanding on this definition, a "path aware
-internetwork" is one in which endpoint discovery of path properties and
-endpoint selection of paths used by traffic exchanged by the endpoint are
-explicitly supported, regardless of the specific design of the protocol
-features which enable this discovery and selection.
+For purposes of this document, "path aware networking" describes endpoint
+discovery of the properties of paths they use for communication across an
+internetwork, and endpoint  reaction to these properties that affects routing
+and/or data transfer. Note that this can and already does happen to some extent
+in the current Internet architecture; this definition expands current techniques
+of path discovery and manipulation to cross administrative domain boundaries and
+up to the transport and application layers at the endpoints.
+
+Expanding on this definition, a "path aware internetwork" is one in which
+endpoint discovery of path properties and endpoint selection of paths used by
+traffic exchanged by the endpoint are explicitly supported, regardless of the
+specific design of the protocol features which enable this discovery and
+selection.
 
 Research into path aware networking covers any and all aspects of
 designing, building, and operating path aware internetworks or the networks
-and endpoints attached to them. This document presents a collection of 
-research questions to address in order to make a path aware Internet a 
+and endpoints attached to them. This document presents a collection of
+research questions to address in order to make a path aware Internet a
 reality.
 
 # Questions
@@ -168,8 +170,8 @@ that information is available at the endpoints, and interactions between the
 measurement and dissemination delay may exhibit pathological behavior for
 unlucky points in the parameter space.
 
-The second question: how do endpoints and applications get access to trustworthy 
-path properties?
+The second question: how do endpoints and applications get access to accurate,
+useful, and trustworthy path properties?
 
 ## Supporting Path Selection
 
@@ -183,8 +185,8 @@ out-of-band control of path selection. Another is granularity of path selection
 (whether per packet, per flow, or per larger aggregate), which also has a large
 impact on the scalabilty/expressiveness tradeoff. Path selection must, like
 path property information, be trustworthy, such that the result of a path
-selection at an endpoint is predictable. Moreover, any path selection mechanism 
-should aim to provide an outcome that is not worse than using a single path, or 
+selection at an endpoint is predictable. Moreover, any path selection mechanism
+should aim to provide an outcome that is not worse than using a single path, or
 selecting paths at random.
 
 The third question: how can endpoints select paths to use for traffic in a way
@@ -200,20 +202,20 @@ selection must be possible based not only on the preferences and policies of the
 application developer, but of end-users as well. Also, the path selection
 interfaces presented to applications and end users will need to support multiple
 levels of granularity. Most applications' requirements can be satisfied with the
-expression path selection policies in terms of properties of the paths, while
+expression of path selection policies in terms of properties of the paths, while
 some applications may need finer-grained, per-path control. These interfaces
 will need to support incremental development and deployment of applications, and
 provide sensible defaults, to avoid hindering their adoption.
 
-The fourth question: how can interfaces to the transport and application
-layers support the use of path awareness?
+The fourth question: how can interfaces among the network, transport, and
+application layers support the use of path awareness?
 
-## Implications of Path Awareness for the Data Plane
+## Implications of Path Awareness for the Transport and Application Layers
 
 In the current Internet, the basic assumption that at a given time all
 traffic for a given flow will receive the same network treatment and traverse
-the same path or equivalend paths often holds. In a path aware network, 
-this assumption is more easily violated. The weakening of this assumption 
+the same path or equivalend paths often holds. In a path aware network,
+this assumption is more easily violated. The weakening of this assumption
 has implications for the design of protocols above any path-aware network layer.
 
 For example, one advantage of multipath communication is that a given
@@ -252,8 +254,8 @@ interfaces) different when applied to tunnel and overlay endpoints?
 The network operations model in the current Internet architecture assumes that
 traffic flows are controlled by the decisions and policies made by network
 operators, as expressed in interdomain and intradomain routing protocols. In
-a network providing path selection to the endpoints, however, this assumption 
-no longer holds, as endpoints may react to path properties by selecting 
+a network providing path selection to the endpoints, however, this assumption
+no longer holds, as endpoints may react to path properties by selecting
 alternate paths. Competing control inputs from path-aware endpoints and the routing
 control plane may lead to more difficult traffic engineering or nonconvergent
 forwarding, especially if the endpoints' and operators' notion of the "best" path
@@ -271,25 +273,31 @@ of at least one path between two endpoints guarantees the selection of at
 least one path between those endpoints."
 
 The seventh question: how can a path aware network in a path aware internetwork
-be effectively operated, given control inputs from the network administrator
-as well as from the endpoints?
+be effectively operated, given control inputs from network administrators,
+application designers, and end users?
 
 ## Deploying a Path Aware Network
 
 The vision presented in the introduction discusses path aware networking from
 the point of view of the benefits accruing at the endpoints, to designers of
 transport protocols and applications as well as to the end users of those
-applications. However, this vision requires action not only at the endpoints
-but within the interconnected networks offering path aware connectivity. While
-the specific actions required are a matter of the design and implementation of
-a specific realization of a path aware protocol stack, it is clear than any
-path aware architecture will require network operators to give up some control
-of their networks over to endpoint-driven control inputs.
+applications. However, this vision requires action not only at the endpoints but
+also within the interconnected networks offering path aware connectivity. While
+the specific actions required are a matter of the design and implementation of a
+specific realization of a path aware protocol stack, it is clear than any path
+aware architecture will require network operators to give up some control of
+their networks over to endpoint-driven control inputs.
 
 Here the question of apparent versus actual conflicts of intent arises again:
 certain network operations requirements may appear essential, but are merely
 accidents of the interfaces provided by current routing and management
-protocols. Incentives for deployment must show how existing network operations
+protocols. For example, related (but adjacent) to path aware networking, the
+widespread use of the TCP wire image {{?RFC8546}} in network monitoring for DDoS
+prevention appears in conflict with the deployment of encrypted transports, only
+because path signaling {{?RFC8558}} has been implicit in the deployment of past
+transport protocols.
+
+Similarly, incentives for deployment must show how existing network operations
 requirements are met through new path selection and property dissemination
 mechanisms.
 
@@ -301,6 +309,11 @@ networking early in this transition (when few endpoints and flows in the
 Internet use path selection) may be different than those later in the
 transition.
 
+Aspects of data security and information management in a network that explicitly
+radiates more information about the network's deployment and configuration, and
+implicitly radiates information about endpoint configuration and preference
+through path selection, must also be addressed.
+
 The eighth question: how can the incentives of network operators and end-users
 be aligned to realize the vision of path aware networking, and how can the
 transition from current ("path-oblivious") to path-aware networking be managed?
@@ -309,9 +322,9 @@ transition from current ("path-oblivious") to path-aware networking be managed?
 
 Many thanks to Adrian Perrig, Jean-Pierre Smith, Mirja Kuehlewind, Olivier
 Bonaventure, Martin Thomson, Shwetha Bhandari, Chris Wood, Lee Howard, Mohamed
-Boucadair, Thorben Krueger, Gorry Fairhurst, Spencer Dawkins, and Theresa Enghardt 
-for discussions leading to questions in this document, and for feedback on the 
-document itself. 
+Boucadair, Thorben Krueger, Gorry Fairhurst, Spencer Dawkins, Theresa Enghardt,
+and Laurent Ciavaglia, for discussions leading to questions in this document, and
+for feedback on the document itself.
 
 This work is partially supported by the European Commission under Horizon 2020
 grant agreement no. 688421 Measurement and Architecture for a Middleboxed

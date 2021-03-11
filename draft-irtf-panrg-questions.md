@@ -113,6 +113,13 @@ traffic exchanged by the endpoint are explicitly supported, regardless of the
 specific design of the protocol features which enable this discovery and
 selection.
 
+A "path", for the purposes of these definitions, is abstractly defined as a
+sequence of adjacent path elements over which a packet can be transmitted,
+where the definition of "path element" is technology-dependent. As this document
+is intended to pose questions rather than answer them, it assumes that this
+definition will be refined as part of the answer the first two questions it
+poses, about the vocabulary of path properties and how they are disseminated.
+
 Research into path aware networking covers any and all aspects of
 designing, building, and operating path aware internetworks or the networks
 and endpoints attached to them. This document presents a collection of

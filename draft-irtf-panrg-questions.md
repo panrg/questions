@@ -196,6 +196,13 @@ selection at an endpoint is predictable. Moreover, any path selection mechanism
 should aim to provide an outcome that is not worse than using a single path, or
 selecting paths at random.
 
+Path selection may be exposed in terms of the properties of the path or the identity
+of elements of the path. In the latter case, a path may be identified at any of
+multiple layers (e.g. control plane address, network layer address, higher-layer
+identifier or name, and so on). In this case, care must be taken to present
+semantically useful information to those making decisions about which path(s)
+to trust.
+
 The third question: how can endpoints select paths to use for traffic in a way
 that can be trusted by the network, the endpoints, and the applications using them?
 

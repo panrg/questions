@@ -135,6 +135,8 @@ future research efforts within the Path Aware Networking Research Group.
 
 ## A Vocabulary of Path Properties
 
+The first question: how are paths and path properties defined and represented?
+
 In order for information about paths to be exposed to an endpoint, and for the
 endpoint to make use of that information, it is necessary to define a common
 vocabulary for paths through an internetwork, and properties of those paths. The
@@ -156,9 +158,10 @@ and may quickly become outdated. However, aggregating the properties of
 individual components to distill end-to-end properties for the entire path is
 not trivial.
 
-The first question: how are paths and path properties defined and represented?
-
 ## Discovery, Distribution, and Trustworthiness of Path Properties
+
+The second question: how do endpoints and applications get access to accurate,
+useful, and trustworthy path properties?
 
 Once endpoints and networks have a shared vocabulary for expressing path
 properties, the network must have some method for distributing those path
@@ -177,10 +180,10 @@ that information is available at the endpoints, and interactions between the
 measurement and dissemination delay may exhibit pathological behavior for
 unlucky points in the parameter space.
 
-The second question: how do endpoints and applications get access to accurate,
-useful, and trustworthy path properties?
-
 ## Supporting Path Selection
+
+The third question: how can endpoints select paths to use for traffic in a way
+that can be trusted by the network, the endpoints, and the applications using them?
 
 Access to trustworthy path properties is only half of the challenge in
 establishing a path-aware architecture. Endpoints must be able to use this
@@ -198,15 +201,15 @@ selecting paths at random.
 
 Path selection may be exposed in terms of the properties of the path or the identity
 of elements of the path. In the latter case, a path may be identified at any of
-multiple layers (e.g. control plane address, network layer address, higher-layer
+multiple layers (e.g. routing domain identifier, network layer address, higher-layer
 identifier or name, and so on). In this case, care must be taken to present
 semantically useful information to those making decisions about which path(s)
 to trust.
 
-The third question: how can endpoints select paths to use for traffic in a way
-that can be trusted by the network, the endpoints, and the applications using them?
-
 ## Interfaces for Path Awareness
+
+The fourth question: how can interfaces among the network, transport, and
+application layers support the use of path awareness?
 
 In order for applications to make effective use of a path-aware networking
 architecture, the control interfaces presented by the network and transport
@@ -221,10 +224,10 @@ some applications may need finer-grained, per-path control. These interfaces
 will need to support incremental development and deployment of applications, and
 provide sensible defaults, to avoid hindering their adoption.
 
-The fourth question: how can interfaces among the network, transport, and
-application layers support the use of path awareness?
-
 ## Implications of Path Awareness for the Transport and Application Layers
+
+The fifth question: how should transport-layer and higher layer protocols be
+redesigned to work most effectively over a path-aware networking layer?
 
 In the current Internet, the basic assumption that at a given time all
 traffic for a given flow will receive the same network treatment and traverse
@@ -244,10 +247,10 @@ strategies required for effective privacy in a path-aware Internet are only
 possible if higher-layer protocols such as TLS permit clients to obtain
 unlinkable identifiers.
 
-The fifth question: how should transport-layer and higher layer protocols be
-redesigned to work most effectively over a path-aware networking layer?
-
 ## What is an Endpoint?
+
+The sixth question: how is path awareness (in terms of vocabulary and
+interfaces) different when applied to tunnel and overlay endpoints?
 
 The vision of path-aware networking articulated so far makes an assumption
 that path properties will be disseminated to endpoints on which applications
@@ -260,10 +263,11 @@ necessarily different than those a path-aware networking layer provides to its
 transport and application layers, and the path property information the
 gateway needs and makes available over those interfaces may also be different.
 
-The sixth question: how is path awareness (in terms of vocabulary and
-interfaces) different when applied to tunnel and overlay endpoints?
-
 ## Operating a Path Aware Network
+
+The seventh question: how can a path aware network in a path aware internetwork
+be effectively operated, given control inputs from network administrators,
+application designers, and end users?
 
 The network operations model in the current Internet architecture assumes that
 traffic flows are controlled by the decisions and policies made by network
@@ -286,11 +290,11 @@ to decreasing connectivity; one such safety principle could be "the existence
 of at least one path between two endpoints guarantees the selection of at
 least one path between those endpoints."
 
-The seventh question: how can a path aware network in a path aware internetwork
-be effectively operated, given control inputs from network administrators,
-application designers, and end users?
-
 ## Deploying a Path Aware Network
+
+The eighth question: how can the incentives of network operators and end-users
+be aligned to realize the vision of path aware networking, and how can the
+transition from current ("path-oblivious") to path-aware networking be managed?
 
 The vision presented in the introduction discusses path aware networking from
 the point of view of the benefits accruing at the endpoints, to designers of
@@ -328,17 +332,13 @@ radiates more information about the network's deployment and configuration, and
 implicitly radiates information about endpoint configuration and preference
 through path selection, must also be addressed.
 
-The eighth question: how can the incentives of network operators and end-users
-be aligned to realize the vision of path aware networking, and how can the
-transition from current ("path-oblivious") to path-aware networking be managed?
-
 # Acknowledgments
 
 Many thanks to Adrian Perrig, Jean-Pierre Smith, Mirja Kuehlewind, Olivier
 Bonaventure, Martin Thomson, Shwetha Bhandari, Chris Wood, Lee Howard, Mohamed
 Boucadair, Thorben Krueger, Gorry Fairhurst, Spencer Dawkins, Theresa Enghardt,
-and Laurent Ciavaglia, for discussions leading to questions in this document, and
-for feedback on the document itself.
+Laurent Ciavaglia, and Stephen Farrell, for discussions leading to questions
+in this document, and for feedback on the document itself.
 
 This work is partially supported by the European Commission under Horizon 2020
 grant agreement no. 688421 Measurement and Architecture for a Middleboxed

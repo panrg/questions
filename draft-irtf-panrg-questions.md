@@ -50,15 +50,17 @@ current thinking in this space.
 In the current Internet architecture, the network layer provides an
 unverifiable, best-effort service to the endpoints using it. While there are
 technologies that attempt better-than-best-effort delivery, the interfaces to
-these are generally administrative as opposed to endpoint-exposed (e.g. PCE
-{{?RFC4655}} and SD-WAN approaches), and they are often restricted to single
+these are generally administrative as opposed to endpoint-exposed (e.g. Path 
+Computation Element (PCE) {{?RFC4655}} and Software-Defined Wide Area Network 
+(SD-WAN) approaches), and they are often restricted to single
 administrative domains. In this environment, an application can assume that a
 packet with a given destination address will eventually be forwarded toward that
 destination, but little else.
 
 A transport layer protocol such as TCP can provide reliability over this
-best-effort service, and a protocol above the network layer such as IPsec AH
-{{?RFC4302}} or TLS {{?RFC8446}} can authenticate the remote endpoint. However,
+best-effort service, and a protocol above the network layer such as IPsec 
+Authentication Header (AH) {{?RFC4302}} or Transport Layer Security (TLS)
+{{?RFC8446}} can authenticate the remote endpoint. However,
 little, if any, explicit information about the path is available to the
 endpoint, and assumptions about that path often do not hold, sometimes with
 serious impacts on the application, as in the case with BGP hijacking attacks.
@@ -68,9 +70,9 @@ ability to select or influence the path through the network used by any given
 packet or flow. The network and transport layers explicitly expose information
 about the path or paths available from one endpoint to another, and to those
 endpoints and the applications running on them, so that they can make this
-selection. The ALTO protocol {{?RFC7285}} can be seen as an example of a
-path-awareness approach implemented in transport-layer terms on the present
-Internet protocol stack.
+selection. The Application Layer Traffic Optimization (ALTO) protocol {{?RFC7285}}
+can be seen as an example of a path-awareness approach implemented in 
+transport-layer terms on the present Internet protocol stack.
 
 Path selection provides explicit visibility and control of network treatment to
 applications and users of the network. This selection is available to the

@@ -102,13 +102,13 @@ Table of Contents
    toward that destination, but little else.
 
    A transport layer protocol such as TCP can provide reliability over
-   this best-effort service, and a protocol above the network layer such
-   as IPsec Authentication Header (AH) [RFC4302] or Transport Layer
-   Security (TLS) [RFC8446] can authenticate the remote endpoint.
-   However, little, if any, explicit information about the path is
-   available to the endpoints, and any assumptions made about that path
-   often do not hold.  These sometimes have serious impacts on the
-   application, as in the case with BGP hijacking attacks.
+   this best-effort service, and a protocol above the network layer,
+   such as Transport Layer Security (TLS) [RFC8446] can authenticate the
+   remote endpoint.  However, little, if any, explicit information about
+   the path is available to the endpoints, and any assumptions made
+   about that path often do not hold.  These sometimes have serious
+   impacts on the application, as in the case with BGP hijacking
+   attacks.
 
    By contrast, in a path-aware internetworking architecture, endpoints
    can select or influence the path(s) through the network used by any
@@ -427,10 +427,6 @@ Table of Contents
    This support does not imply endorsement.
 
 4.  Informative References
-
-   [RFC4302]  Kent, S., "IP Authentication Header", RFC 4302,
-              DOI 10.17487/RFC4302, December 2005,
-              <https://www.rfc-editor.org/rfc/rfc4302>.
 
    [RFC4655]  Farrel, A., Vasseur, J.-P., and J. Ash, "A Path
               Computation Element (PCE)-Based Architecture", RFC 4655,

@@ -1195,13 +1195,12 @@ administrative domains. In this architecture, an application can assume that a
 packet with a given destination address will eventually be forwarded toward that
 destination, but little else.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">A transport layer protocol such as TCP can provide reliability over this
-best-effort service, and a protocol above the network layer such as IPsec 
-Authentication Header (AH) <span>[<a href="#RFC4302" class="xref">RFC4302</a>]</span> or Transport Layer Security (TLS)
-<span>[<a href="#RFC8446" class="xref">RFC8446</a>]</span> can authenticate the remote endpoint. However,
-little, if any, explicit information about the path is available to the
-endpoints, and any assumptions made about that path often do not hold. 
-These sometimes have serious impacts on the application, as in the case
-with BGP hijacking attacks.<a href="#section-1-2" class="pilcrow">¶</a></p>
+best-effort service, and a protocol above the network layer, such as
+Transport Layer Security (TLS) <span>[<a href="#RFC8446" class="xref">RFC8446</a>]</span> can authenticate the remote
+endpoint. However, little, if any, explicit information about the path
+is available to the endpoints, and any assumptions made about that path
+often do not hold.  These sometimes have serious impacts on the application,
+as in the case with BGP hijacking attacks.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">By contrast, in a path-aware internetworking architecture, endpoints can
 select or influence the path(s) through the network used by any given
 packet or flow. The network and transport layers explicitly expose information
@@ -1510,10 +1509,6 @@ Innovation under contract no. 15.0268. This support does not imply endorsement.<
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
       </h2>
 <dl class="references">
-<dt id="RFC4302">[RFC4302]</dt>
-      <dd>
-<span class="refAuthor">Kent, S.</span>, <span class="refTitle">"IP Authentication Header"</span>, <span class="seriesInfo">RFC 4302</span>, <span class="seriesInfo">DOI 10.17487/RFC4302</span>, <time datetime="2005-12" class="refDate">December 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4302">https://www.rfc-editor.org/rfc/rfc4302</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="RFC4655">[RFC4655]</dt>
       <dd>
 <span class="refAuthor">Farrel, A.</span>, <span class="refAuthor">Vasseur, J.-P.</span>, and <span class="refAuthor">J. Ash</span>, <span class="refTitle">"A Path Computation Element (PCE)-Based Architecture"</span>, <span class="seriesInfo">RFC 4655</span>, <span class="seriesInfo">DOI 10.17487/RFC4655</span>, <time datetime="2006-08" class="refDate">August 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4655">https://www.rfc-editor.org/rfc/rfc4655</a>&gt;</span>. </dd>

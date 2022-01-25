@@ -58,12 +58,12 @@ packet with a given destination address will eventually be forwarded toward that
 destination, but little else.
 
 A transport layer protocol such as TCP can provide reliability over this
-best-effort service, and a protocol above the network layer such as IPsec 
-Authentication Header (AH) {{?RFC4302}} or Transport Layer Security (TLS)
-{{?RFC8446}} can authenticate the remote endpoint. However,
-little, if any, explicit information about the path is available to the
-endpoint, and assumptions about that path often do not hold, sometimes with
-serious impacts on the application, as in the case with BGP hijacking attacks.
+best-effort service, and a protocol above the network layer such as
+Transport Layer Security (TLS) {{?RFC8446}} can authenticate the remote
+endpoint. However, little, if any, explicit information about the path is
+available to the endpoint, and assumptions about that path often do not hold,
+sometimes with serious impacts on the application, as in the case with BGP
+hijacking attacks.
 
 By contrast, in a path-aware internetworking architecture, endpoints have the
 ability to select or influence the path through the network used by any given

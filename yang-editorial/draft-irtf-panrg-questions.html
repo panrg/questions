@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>Current Open Questions in Path Aware Networking</title>
+<meta content="Brian Trammell" name="author">
+<meta content='
+       In contrast to the present Internet architecture, a path-aware internetworking
+architecture has two important properties: it exposes the properties of
+available Internet paths to endpoints, and provides for endpoints and
+applications to use these properties to select paths through the Internet for
+their traffic. While this property of "path awareness" already exists in many
+Internet-connected networks within single domains and via administrative
+interfaces to the network layer, a fully path-aware internetwork expands these
+concepts across layers and across the Internet. 
+       This document poses questions in path-aware networking open as of 2021, that
+must be answered in the design, development, and deployment of path-aware
+internetworks. It was originally written to frame discussions in the Path Aware
+Networking proposed Research Group (PANRG), and has been published to snapshot
+current thinking in this space. 
+    ' name="description">
+<meta content="xml2rfc 3.12.0" name="generator">
+<meta content="Internet-Draft" name="keyword">
+<meta content="draft-irtf-panrg-questions-latest" name="ietf.draft">
+<!-- Generator version information:
+  xml2rfc 3.12.0
+    Python 3.9.7
+    appdirs 1.4.4
+    ConfigArgParse 1.3
+    google-i18n-address 2.5.0
+    html5lib 1.1
+    intervaltree 3.1.0
+    Jinja2 2.11.3
+    kitchen 1.2.6
+    lxml 4.6.5
+    pycountry 20.7.3
+    pyflakes 2.3.1
+    PyYAML 5.4.1
+    requests 2.26.0
+    setuptools 52.0.0
+    six 1.16.0
+-->
+<link href="draft-irtf-panrg-questions.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-cyrillic.woff2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-vietnamese.woff2') format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+}
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Cabin Condensed';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Oxygen Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  color-scheme: light dark;
+  --background-color: #fff;
+  --text-color: #222;
+  --title-color: #191919;
+  --link-color: #2a6496;
+  --highlight-color: #f9f9f9;
+  --line-color: #eee;
+  --pilcrow-weak: #ddd;
+  --pilcrow-strong: #bbb;
+  --small-font-size: 14.5px;
+  --font-mono: 'Oxygen Mono', monospace;
+  scrollbar-color: #bbb #eee;
+}
+body {
+  max-width: 600px;
+  margin: 75px auto;
+  padding: 0 5px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font: 16px/22px "Lora", serif;
+  scroll-behavior: smooth;
+}
+
+.ears {
+  display: none;
+}
+
+/* headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Cabin Condensed", sans-serif;
+  font-weight: 600;
+  margin: 0.8em 0 0.3em;
+  font-size-adjust: 0.5;
+  color: var(--title-color);
+}
+h1#title {
+  font-size: 32px;
+  line-height: 40px;
+  clear: both;
+}
+h1#title, h1#rfcnum {
+  margin: 1.5em 0 0.2em;
+}
+h1#rfcnum + h1#title {
+  margin: 0.2em 0;
+}
+
+h1, h2, h3 {
+  font-size: 22px;
+  line-height: 27px;
+}
+h4, h5, h6 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+/* general structure */
+.author {
+  padding-bottom: 0.3em;
+}
+#abstract+p {
+  font-size: 18px;
+  line-height: 24px;
+}
+#abstract+p code, #abstract+p samp, #abstract+p tt {
+  font-size: 16px;
+  line-height: 0;
+}
+
+p {
+  padding: 0;
+  margin: 0.5em 0;
+  text-align: left;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+/* font-family isn't space-separated, but =~ will have to do */
+svg[font-family~="monospace" i], svg [font-family~="monospace" i] {
+  font-family: var(--font-mono);
+}
+.alignCenter.art-text {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--line-color);
+  border-radius: 3px;
+  padding: 0.5em 1em 0;
+  margin-bottom: 0.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+  width: auto;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  border: none;
+  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+     support flexbox yet.
+  */
+  display: table;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 0.5em 2em;
+}
+ol ol, ul ul, ol ul, ul ol {
+  margin-left: 1em;
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+.ulCompact li {
+  margin: 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+}
+ul.empty li, .ulEmpty li {
+  margin-top: 0.5em;
+}
+ul.compact, .ulCompact,
+ol.compact, .olCompact {
+  line-height: 100%;
+  margin: 0 0 0 2em;
+}
+
+/* definition lists */
+dl {
+}
+dl > dt {
+  float: left;
+  margin-right: 1em;
+}
+dl > dd {
+  margin-bottom: .8em;
+  min-height: 1.3em;
+}
+dl.compact > dd, .dlCompact > dd {
+  margin-bottom: 0em;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+}
+dd.break {
+  display: none;
+}
+
+/* links */
+a, a[href].selfRef:hover {
+  text-decoration: none;
+}
+a[href].selfRef {
+  color: var(--text-color);
+}
+a[href] {
+  color: var(--link-color);
+}
+a[href]:hover {
+  text-decoration: underline;
+}
+a[href].selfRef:hover {
+  background-color: var(--highlight-color);
+}
+a.xref {
+  white-space: nowrap;
+}
+
+/* Figures */
+tt, code, pre {
+  background-color: var(--highlight-color);
+  font: 14px/22px var(--font-mono);
+}
+tt, code {
+  /* changing the font for inline elements leads to different ascender
+     and descender heights; as we want to retain baseline alignment,
+     remove leading to avoid altering the final height of lines */
+  line-height: 0;
+}
+pre {
+  border: 1px solid var(--line-color);
+  font-size: 13.5px;
+  line-height: 16px;
+  letter-spacing: -0.2px;
+  margin: 5px;
+  padding: 5px;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0.5em 0;
+  padding: 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption, caption {
+  font-style: italic;
+  margin: 0.5em 1.5em;
+  text-align: left;
+}
+@media screen {
+  pre, svg {
+    display: inline-block;
+    overflow-x: auto;
+  }
+  pre {
+    max-width: 100%;
+    width: calc(100% - 22px - 1em);
+  }
+  svg {
+    max-width: calc(100% - 22px - 1em);
+  }
+  figure pre {
+    display: block;
+    width: calc(100% - 25px);
+  }
+  pre + .pilcrow, svg + .pilcrow {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding-bottom: 8px;
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 0 2em;
+  font-style: italic;
+}
+blockquote {
+  margin: 1em 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  max-width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+}
+table.right {
+  margin-left: auto;
+}
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+table.left {
+  margin-right: auto;
+}
+thead, tbody {
+  border: 1px solid var(--line-color);
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 5px 10px;
+}
+th {
+  background-color: var(--line-color);
+}
+tr:nth-child(2n) > td {
+  background-color: var(--background-color);
+}
+tr:nth-child(2n+1) > td {
+  background-color: var(--highlight-color);
+}
+thead+tbody > tr:nth-child(2n) > td {
+  background-color: var(--highlight-color);
+}
+thead+tbody > tr:nth-child(2n+1) > td {
+  background-color: var(--background-color);
+}
+table caption {
+  margin: 0;
+  padding: 3px 0 3px 1em;
+}
+table p {
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  margin-left: 3px;
+  opacity: 0.2;
+  user-select: none;
+}
+a.pilcrow[href] { color: var(--pilcrow-weak); }
+a.pilcrow[href]:hover { text-decoration: none; }
+@media not print {
+  :hover > a.pilcrow {
+    opacity: 1;
+  }
+  a.pilcrow[href]:hover {
+    color: var(--pilcrow-strong);
+    background-color: transparent;
+  }
+}
+@media print {
+  a.pilcrow {
+    display: none;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line-color);
+}
+.bcp14 {
+  font-variant: small-caps;
+}
+
+.role {
+  font-variant: all-small-caps;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: var(--small-font-size);
+  line-height: 18px;
+  --identifier-width: 8em;
+}
+#identifiers dt {
+  width: var(--identifier-width);
+  margin: 0;
+  clear: left;
+  float: left;
+  text-align: right;
+}
+#identifiers dd {
+  margin: 0 0 0 calc(1em + var(--identifier-width));
+  min-width: 5em;
+}
+#identifiers .authors .author {
+  display: inline-block;
+  margin-right: 1.5em;
+}
+#identifiers .authors .org {
+  font-style: italic;
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: left;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+}
+#toc nav ul {
+  margin: 0 0.5em 0 0;
+  padding: 0;
+  list-style: none;
+}
+#toc nav li {
+  line-height: 1.3em;
+  margin: 0.75em 0;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}
+#toc a.xref {
+  white-space: normal;
+}
+/* references */
+.references dt {
+  text-align: right;
+  font-weight: bold;
+  min-width: 7em;
+}
+.references dd {
+  margin-left: 8em;
+  overflow: auto;
+}
+
+.refInstance {
+  margin-bottom: 1.25em;
+}
+
+.references .ascii {
+  margin-bottom: 0.25em;
+}
+
+/* index */
+#rfc\.index\.index + ul {
+  margin-left: 0;
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  margin: 1em 0;
+}
+address.vcard .nameRole {
+  font-weight: 700;
+  margin-left: 0;
+}
+address.vcard .label {
+  margin: 0.5em 0;
+}
+address.vcard .type {
+  display: none;
+}
+.alternative-contact {
+  margin: 1.5em 0 1em;
+}
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+@media (min-width: 500px) {
+  #authors-addresses > section {
+    column-count: 2;
+    column-gap: 20px;
+  }
+  #authors-addresses > section > h2 {
+    column-span: all;
+  }
+  /* hack for break-inside: avoid-column */
+  #authors-addresses address {
+    display: inline-block;
+    break-inside: avoid-column;
+  }
+}
+
+.rfcEditorRemove p:first-of-type {
+  font-style: italic;
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+/* alternative layout for smaller screens */
+@media screen and (max-width: 929px) {
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+    opacity: 0.6;
+  }
+  #toc.active {
+      opacity: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 2px 0 2px 6px;
+    padding-right: 1em;
+    font-size: 18px;
+    line-height: 24px;
+    min-width: 190px;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+  }
+  #toc h2::before { /* css hamburger */
+    float: right;
+    position: relative;
+    width: 1em;
+    height: 1px;
+    left: -164px;
+    margin: 8px 0 0 0;
+    background: white none repeat scroll 0 0;
+    box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+    content: "";
+  }
+  #toc nav {
+    display: none;
+    background-color: var(--background-color);
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }
+  #toc.active nav {
+    display: block;
+  }
+  /* Make the collapsed ToC header render white on gray also when it's a link */
+  #toc h2 a,
+  #toc h2 a:link,
+  #toc h2 a:focus,
+  #toc h2 a:hover,
+  #toc a.toplink,
+  #toc a.toplink:hover {
+    color: white;
+    background-color: #444;
+    text-decoration: none;
+  }
+  #toc a.toplink {
+    margin-top: 2px;
+  }
+}
+
+/* alternative layout for wide screens */
+@media screen and (min-width: 930px) {
+  body {
+    padding-right: 360px;
+    padding-right: calc(min(180px + 20%, 500px));
+  }
+  #toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 480px);
+    width: 312px;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+  }
+  #toc h2 {
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 2em;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  #toc nav > ul  {
+    margin-bottom: 2em;
+  }
+  #toc ul {
+    margin: 0 0 0 4px;
+    font-size: var(--small-font-size);
+  }
+  #toc ul p, #toc ul li {
+    margin: 2px 0;
+    line-height: 22px;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre {
+    page-break-inside: avoid;
+  }
+  figure {
+    overflow: scroll;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  h2+*, h3+*, h4+*, h5+*, h6+* {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+}
+
+/* Changes introduced to fix issues found during implementation */
+
+/* Separate body from document info even without intervening H1 */
+section {
+  clear: both;
+}
+
+/* Top align author divs, to avoid names without organization dropping level with org names */
+.author {
+  vertical-align: top;
+}
+
+/* Style section numbers with more space between number and title */
+.section-number {
+  padding-right: 0.5em;
+}
+
+/* Add styling for a link in the ToC that points to the top of the document */
+a.toplink {
+  float: right;
+  margin: 8px 0.5em 0;
+}
+
+/* Fix the dl styling to match the RFC 7992 attributes */
+dl > dt,
+dl.dlParallel > dt {
+  float: left;
+  margin-right: 1em;
+}
+dl.dlNewline > dt {
+  float: none;
+}
+
+/* Provide styling for table cell text alignment */
+table .text-left, table .text-left {
+  text-align: left;
+}
+table .text-center, table .text-center {
+  text-align: center;
+}
+table .text-right, table .text-right {
+  text-align: right;
+}
+
+/* Make the alternative author contact information look less like just another
+   author, and group it closer with the primary author contact information */
+.alternative-contact {
+  margin: 0.5em 0 0.25em 0;
+}
+address .non-ascii {
+  margin: 0 0 0 2em;
+}
+
+/* With it being possible to set tables with alignment
+  left, center, and right, { width: 100%; } does not make sense */
+table {
+  width: auto;
+}
+
+/* Avoid reference text that sits in a block with very wide left margin,
+   because of a long floating dt label.*/
+.references dd {
+  overflow: visible;
+}
+
+/* Control caption placement */
+caption {
+  caption-side: bottom;
+}
+
+/* Limit the width of the author address vcard, so names in right-to-left
+   script don't end up on the other side of the page. */
+
+address.vcard {
+  max-width: 20em;
+  margin-right: auto;
+}
+
+/* For address alignment dependent on LTR or RTL scripts */
+address div.left {
+  text-align: left;
+}
+address div.right {
+  text-align: right;
+}
+
+/* Give the table caption label the same styling as the figcaption */
+
+@media print {
+  .toplink {
+    display: none;
+  }
+
+  /* avoid overwriting the top border line with the ToC header */
+  #toc {
+    padding-top: 1px;
+  }
+
+  /* Avoid page breaks inside dl and author address entries */
+  dd {
+    page-break-before: avoid;
+  }
+  .vcard {
+    page-break-inside: avoid;
+  }
+
+}
+/* Tweak the bcp14 keyword presentation */
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+/* Dark mode. */
+@media (prefers-color-scheme: dark) {
+:root {
+  --background-color: #121212;
+  --text-color: #f0f0f0;
+  --title-color: #fff;
+  --link-color: #4da4f0;
+  --highlight-color: #282828;
+  --line-color: #444;
+  --pilcrow-weak: #444;
+  --pilcrow-strong: #666;
+  scrollbar-color: #777 #333;
+}
+/* Trick: a prefix match works because only black and white are allowed */
+svg [stroke="black"], svg [stroke^="#000"] {
+  stroke: var(--text-color);
+}
+svg [stroke="white"], svg [stroke^="#fff"] {
+  stroke: var(--background-color);
+}
+svg [fill="black"], svg [fill^="#000"], svg :not([fill]) {
+  fill: var(--text-color);
+}
+svg [stroke="fill"], svg [fill^="#fff"] {
+  fill: var(--background-color);
+}
+}
+</style>
+
+</head>
+<body>
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">PAN questions</td>
+<td class="right">January 2022</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Trammell</td>
+<td class="center">Expires 29 July 2022</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">Path Aware Networking RG</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-irtf-panrg-questions-latest</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2022-01-25" class="published">25 January 2022</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Informational</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2022-07-29">29 July 2022</time></dd>
+<dt class="label-authors">Author:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">B. Trammell</div>
+<div class="org">Google Switzerland GmbH</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">Current Open Questions in Path Aware Networking</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">In contrast to the present Internet architecture, a path-aware internetworking
+architecture has two important properties: it exposes the properties of
+available Internet paths to endpoints, and provides for endpoints and
+applications to use these properties to select paths through the Internet for
+their traffic. While this property of "path awareness" already exists in many
+Internet-connected networks within single domains and via administrative
+interfaces to the network layer, a fully path-aware internetwork expands these
+concepts across layers and across the Internet.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-2">This document poses questions in path-aware networking open as of 2021, that
+must be answered in the design, development, and deployment of path-aware
+internetworks. It was originally written to frame discussions in the Path Aware
+Networking proposed Research Group (PANRG), and has been published to snapshot
+current thinking in this space.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+</section>
+<section class="note rfcEditorRemove" id="section-note.1">
+      <h2 id="name-discussion-venues">
+<a href="#name-discussion-venues" class="section-name selfRef">Discussion Venues</a>
+      </h2>
+<p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
+<p id="section-note.1-2">Source for this draft and an issue tracker can be found at
+  <span><a href="https://github.com/panrg/questions">https://github.com/panrg/questions</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 29 July 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2022 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document. Code Components extracted from this
+            document must include Revised BSD License text as described in
+            Section 4.e of the Trust Legal Provisions and are provided without
+            warranty as described in the Revised BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="xref">1</a>.  <a href="#name-introduction-to-path-aware-" class="xref">Introduction to Path-Aware Networking</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="xref">1.1</a>.  <a href="#name-definitions" class="xref">Definitions</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="xref">2</a>.  <a href="#name-questions" class="xref">Questions</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="xref">2.1</a>.  <a href="#name-a-vocabulary-of-path-proper" class="xref">A Vocabulary of Path Properties</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
+                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="xref">2.2</a>.  <a href="#name-discovery-distribution-and-" class="xref">Discovery, Distribution, and Trustworthiness of Path Properties</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
+                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="xref">2.3</a>.  <a href="#name-supporting-path-selection" class="xref">Supporting Path Selection</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.4">
+                <p id="section-toc.1-1.2.2.4.1"><a href="#section-2.4" class="xref">2.4</a>.  <a href="#name-interfaces-for-path-awarene" class="xref">Interfaces for Path Awareness</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.5">
+                <p id="section-toc.1-1.2.2.5.1"><a href="#section-2.5" class="xref">2.5</a>.  <a href="#name-implications-of-path-awaren" class="xref">Implications of Path Awareness for the Transport and Application Layers</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.6">
+                <p id="section-toc.1-1.2.2.6.1"><a href="#section-2.6" class="xref">2.6</a>.  <a href="#name-what-is-an-endpoint" class="xref">What is an Endpoint?</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.7">
+                <p id="section-toc.1-1.2.2.7.1"><a href="#section-2.7" class="xref">2.7</a>.  <a href="#name-operating-a-path-aware-netw" class="xref">Operating a Path Aware Network</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.8">
+                <p id="section-toc.1-1.2.2.8.1"><a href="#section-2.8" class="xref">2.8</a>.  <a href="#name-deploying-a-path-aware-netw" class="xref">Deploying a Path Aware Network</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-acknowledgments" class="xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-informative-references" class="xref">Informative References</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#appendix-A" class="xref"></a><a href="#name-authors-address" class="xref">Author's Address</a></p>
+</li>
+        </ul>
+</nav>
+</section>
+</div>
+<div id="intro">
+<section id="section-1">
+      <h2 id="name-introduction-to-path-aware-">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction-to-path-aware-" class="section-name selfRef">Introduction to Path-Aware Networking</a>
+      </h2>
+<p id="section-1-1">In the current Internet architecture, the network layer provides a 
+best-effort service to the endpoints using it, without verifiability of the
+properties of the path between tne endpoints. While there are network layer
+technologies that attempt better-than-best-effort delivery, the interfaces to
+these are generally administrative as opposed to endpoint-exposed (e.g. Path 
+Computation Element (PCE) <span>[<a href="#RFC4655" class="xref">RFC4655</a>]</span> and Software-Defined Wide Area Network 
+(SD-WAN) approaches), and they are often restricted to single
+administrative domains. In this architecture, an application can assume that a
+packet with a given destination address will eventually be forwarded toward that
+destination, but little else.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">A transport layer protocol such as TCP can provide reliability over this
+best-effort service, and a protocol above the network layer such as IPsec 
+Authentication Header (AH) <span>[<a href="#RFC4302" class="xref">RFC4302</a>]</span> or Transport Layer Security (TLS)
+<span>[<a href="#RFC8446" class="xref">RFC8446</a>]</span> can authenticate the remote endpoint. However,
+little, if any, explicit information about the path is available to the
+endpoints, and any assumptions made about that path often do not hold. 
+These sometimes have serious impacts on the application, as in the case
+with BGP hijacking attacks.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">By contrast, in a path-aware internetworking architecture, endpoints can
+select or influence the path(s) through the network used by any given
+packet or flow. The network and transport layers explicitly expose information
+about the path or paths available to the endpoints and to the applications
+running on them, so that they can make this selection. The Application Layer
+Traffic Optimization (ALTO) protocol <span>[<a href="#RFC7285" class="xref">RFC7285</a>]</span> can be seen as an example
+of a path-awareness approach implemented in transport-layer terms on the
+present Internet protocol stack.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">Path selection provides explicit visibility and control of network treatment to
+applications and users of the network. This selection is available to the
+application, transport, and/or network layer entities at each endpoint. Path
+control at the flow and subflow level enables the design of new transport
+protocols that can leverage multipath connectivity across disjoint paths through
+the Internet, even over a single physical interface.  When exposed to
+applications, or to end-users through a system configuration interface, path
+control allows the specification of constraints on the paths that traffic should
+traverse, for instance to confound passive surveillance in the network core
+<span>[<a href="#RFC7624" class="xref">RFC7624</a>]</span>.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">We note that this property of "path awareness" already exists in many
+Internet-connected networks within single domains. Indeed, much of the practice
+of network engineering using encapsulation at layer 3 can be said to be "path
+aware", in that it explicitly assigns traffic at tunnel endpoints to a given
+path within the network. Path-aware internetworking seeks to extend this
+awareness across domain boundaries without resorting to overlays, except as a
+transition technology.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-6">This document presents a snapshot of open questions in this space that will need
+to be answered in order to realize a path-aware internetworking architecture; it
+is published to further frame discussions within and outside the Path Aware
+Networking Research Group, and is published with the rough consensus of that
+group.<a href="#section-1-6" class="pilcrow">¶</a></p>
+<div id="definitions">
+<section id="section-1.1">
+        <h3 id="name-definitions">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-definitions" class="section-name selfRef">Definitions</a>
+        </h3>
+<p id="section-1.1-1">For purposes of this document, "path aware networking" describes endpoint
+discovery of the properties of paths they use for communication across an
+internetwork, and endpoint  reaction to these properties that affects routing
+and/or data transfer. Note that this can and already does happen to some extent
+in the current Internet architecture; this definition expands current techniques
+of path discovery and manipulation to cross administrative domain boundaries and
+up to the transport and application layers at the endpoints.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.1-2">Expanding on this definition, a "path aware internetwork" is one in which
+endpoint discovery of path properties and endpoint selection of paths used by
+traffic exchanged by the endpoint are explicitly supported, regardless of the
+specific design of the protocol features which enable this discovery and
+selection.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
+<p id="section-1.1-3">A "path", for the purposes of these definitions, is abstractly defined as a
+sequence of adjacent path elements over which a packet can be transmitted,
+where the definition of "path element" is technology-dependent. As this document
+is intended to pose questions rather than answer them, it assumes that this
+definition will be refined as part of the answer the first two questions it
+poses, about the vocabulary of path properties and how they are disseminated.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
+<p id="section-1.1-4">Research into path aware internetworking covers any and all aspects of
+designing, building, and operating path aware internetworks or the networks
+and endpoints attached to them. This document presents a collection of
+research questions to address in order to make a path aware Internet a
+reality.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="questions">
+<section id="section-2">
+      <h2 id="name-questions">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-questions" class="section-name selfRef">Questions</a>
+      </h2>
+<p id="section-2-1">Realizing path-aware networking requires answers to a set of open research
+questions. This document poses these questions, as a starting point for
+discussions about how to realize path awareness in the Internet, and to direct
+future research efforts within the Path Aware Networking Research Group.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<div id="a-vocabulary-of-path-properties">
+<section id="section-2.1">
+        <h3 id="name-a-vocabulary-of-path-proper">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-a-vocabulary-of-path-proper" class="section-name selfRef">A Vocabulary of Path Properties</a>
+        </h3>
+<p id="section-2.1-1">The first question: how are paths and path properties defined and represented?<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-2">In order for information about paths to be exposed to an endpoint, and for the
+endpoint to make use of that information, it is necessary to define a common
+vocabulary for paths through an internetwork, and properties of those paths. The
+elements of this vocabulary could include terminology for components of a path
+and properties defined for these components, for the entire path, or for
+subpaths of a path. These properties may be relatively static, such as the
+presence of a given node or service function on the path; as well as relatively
+dynamic, such as the current values of metrics such as loss and latency.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+<p id="section-2.1-3">This vocabulary and its representation must be defined carefully, as its design 
+will have impacts on the properties (e.g., expressiveness, scalability, security)
+of a given path-aware internetworking architecture. For example, a system that exposes
+node-level information for the topology through each network would maximize
+information about the individual components of the path at the endpoints, at
+the expense of making internal network topology universally public, which may
+be in conflict with the business goals of each network's operator. Furthermore,
+properties related to individual components of the path may change frequently
+and may quickly become outdated. However, aggregating the properties of
+individual components to distill end-to-end properties for the entire path is
+not trivial.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="discovery-distribution-and-trustworthiness-of-path-properties">
+<section id="section-2.2">
+        <h3 id="name-discovery-distribution-and-">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-discovery-distribution-and-" class="section-name selfRef">Discovery, Distribution, and Trustworthiness of Path Properties</a>
+        </h3>
+<p id="section-2.2-1">The second question: how do endpoints and applications get access to accurate,
+useful, and trustworthy path properties?<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2-2">Once endpoints and networks have a shared vocabulary for expressing path
+properties, the network must have some method for distributing those path
+properties to the endpoints. Regardless of how path property information is
+distributed, the endpoints require a method to authenticate
+the properties -- to determine that they originated from and pertain to the
+path that they purport to.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
+<p id="section-2.2-3">Choices in distribution and authentication methods will have impacts on the
+scalability of a path-aware architecture. Possible dimensions in the space of
+distribution methods include in-band versus out-of-band, push versus pull
+versus publish-subscribe, and so on. There are temporal issues with path
+property dissemination as well, especially with dynamic properties, since the
+measurement or elicitation of dynamic properties may be outdated by the time
+that information is available at the endpoints, and interactions between the
+measurement and dissemination delay may exhibit pathological behavior for
+unlucky points in the parameter space.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="supporting-path-selection">
+<section id="section-2.3">
+        <h3 id="name-supporting-path-selection">
+<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-supporting-path-selection" class="section-name selfRef">Supporting Path Selection</a>
+        </h3>
+<p id="section-2.3-1">The third question: how can endpoints select paths to use for traffic in a way
+that can be trusted by the network, the endpoints, and the applications using them?<a href="#section-2.3-1" class="pilcrow">¶</a></p>
+<p id="section-2.3-2">Access to trustworthy path properties is only half of the challenge in
+establishing a path-aware architecture. Endpoints must be able to use this
+information in order to select paths for specific traffic they send. As with the
+dissemination of path properties, choices made in path selection methods will
+also have an impact on the tradeoff between scalability and expressiveness of a
+path-aware architecture. One key choice here is between in-band and
+out-of-band control of path selection. Another is granularity of path selection
+(whether per packet, per flow, or per larger aggregate), which also has a large
+impact on the scalabilty/expressiveness tradeoff. Path selection must, like
+path property information, be trustworthy, such that the result of a path
+selection at an endpoint is predictable. Moreover, any path selection mechanism
+should aim to provide an outcome that is not worse than using a single path, or
+selecting paths at random.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
+<p id="section-2.3-3">Path selection may be exposed in terms of the properties of the path or the identity
+of elements of the path. In the latter case, a path may be identified at any of
+multiple layers (e.g. routing domain identifier, network layer address, higher-layer
+identifier or name, and so on). In this case, care must be taken to present
+semantically useful information to those making decisions about which path(s)
+to trust.<a href="#section-2.3-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="interfaces-for-path-awareness">
+<section id="section-2.4">
+        <h3 id="name-interfaces-for-path-awarene">
+<a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-interfaces-for-path-awarene" class="section-name selfRef">Interfaces for Path Awareness</a>
+        </h3>
+<p id="section-2.4-1">The fourth question: how can interfaces among the network, transport, and
+application layers support the use of path awareness?<a href="#section-2.4-1" class="pilcrow">¶</a></p>
+<p id="section-2.4-2">In order for applications to make effective use of a path-aware networking
+architecture, the control interfaces presented by the network and transport
+layers must also expose path properties to the application in a useful way, and
+provide a useful set of paths among which the application can select. Path
+selection must be possible based not only on the preferences and policies of the
+application developer, but of end-users as well. Also, the path selection
+interfaces presented to applications and end users will need to support multiple
+levels of granularity. Most applications' requirements can be satisfied with the
+expression of path selection policies in terms of properties of the paths, while
+some applications may need finer-grained, per-path control. These interfaces
+will need to support incremental development and deployment of applications, and
+provide sensible defaults, to avoid hindering their adoption.<a href="#section-2.4-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="implications-of-path-awareness-for-the-transport-and-application-layers">
+<section id="section-2.5">
+        <h3 id="name-implications-of-path-awaren">
+<a href="#section-2.5" class="section-number selfRef">2.5. </a><a href="#name-implications-of-path-awaren" class="section-name selfRef">Implications of Path Awareness for the Transport and Application Layers</a>
+        </h3>
+<p id="section-2.5-1">The fifth question: how should transport-layer and higher layer protocols be
+redesigned to work most effectively over a path-aware networking layer?<a href="#section-2.5-1" class="pilcrow">¶</a></p>
+<p id="section-2.5-2">In the current Internet, the basic assumption that at a given time all
+traffic for a given flow will receive the same network treatment and traverse
+the same path or equivalend paths often holds. In a path aware network,
+this assumption is more easily violated. The weakening of this assumption
+has implications for the design of protocols above any path-aware network layer.<a href="#section-2.5-2" class="pilcrow">¶</a></p>
+<p id="section-2.5-3">For example, one advantage of multipath communication is that a given
+end-to-end flow can be "sprayed" along multiple paths in order to confound
+attempts to collect data or metadata from those flows for pervasive
+surveillance purposes <span>[<a href="#RFC7624" class="xref">RFC7624</a>]</span>. However, the benefits of this approach are
+reduced if the upper-layer protocols use linkable identifiers on packets
+belonging to the same flow across different paths. Clients may mitigate
+linkability by opting to not re-use cleartext connection identifiers, such as
+TLS session IDs or tickets, on separate paths. The privacy-conscious
+strategies required for effective privacy in a path-aware Internet are only
+possible if higher-layer protocols such as TLS permit clients to obtain
+unlinkable identifiers.<a href="#section-2.5-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="what-is-an-endpoint">
+<section id="section-2.6">
+        <h3 id="name-what-is-an-endpoint">
+<a href="#section-2.6" class="section-number selfRef">2.6. </a><a href="#name-what-is-an-endpoint" class="section-name selfRef">What is an Endpoint?</a>
+        </h3>
+<p id="section-2.6-1">The sixth question: how is path awareness (in terms of vocabulary and
+interfaces) different when applied to tunnel and overlay endpoints?<a href="#section-2.6-1" class="pilcrow">¶</a></p>
+<p id="section-2.6-2">The vision of path-aware networking articulated so far makes an assumption
+that path properties will be disseminated to endpoints on which applications
+are running (terminals with user agents, servers, and so on). However,
+incremental deployment may require that a path-aware network "core" be used to
+interconnect islands of legacy protocol networks. In these cases, it is the
+gateways, not the application endpoints, that receive path properties and make
+path selections for that traffic. The interfaces provided by this gateway are
+necessarily different than those a path-aware networking layer provides to its
+transport and application layers, and the path property information the
+gateway needs and makes available over those interfaces may also be different.<a href="#section-2.6-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="operating-a-path-aware-network">
+<section id="section-2.7">
+        <h3 id="name-operating-a-path-aware-netw">
+<a href="#section-2.7" class="section-number selfRef">2.7. </a><a href="#name-operating-a-path-aware-netw" class="section-name selfRef">Operating a Path Aware Network</a>
+        </h3>
+<p id="section-2.7-1">The seventh question: how can a path aware network in a path aware internetwork
+be effectively operated, given control inputs from network administrators,
+application designers, and end users?<a href="#section-2.7-1" class="pilcrow">¶</a></p>
+<p id="section-2.7-2">The network operations model in the current Internet architecture assumes that
+traffic flows are controlled by the decisions and policies made by network
+operators, as expressed in interdomain and intradomain routing protocols. In
+a network providing path selection to the endpoints, however, this assumption
+no longer holds, as endpoints may react to path properties by selecting
+alternate paths. Competing control inputs from path-aware endpoints and the routing
+control plane may lead to more difficult traffic engineering or nonconvergent
+forwarding, especially if the endpoints' and operators' notion of the "best" path
+for given traffic diverges significantly. The degree of difficulty may depend on
+the fidelity of information made available to path selection algorithms at
+the endpoints. Explicit path selection can also specify
+outbound paths, while BGP policies are expressed in terms of inbound traffic.<a href="#section-2.7-2" class="pilcrow">¶</a></p>
+<p id="section-2.7-3">A concept for path aware network operations will need to have clear methods
+for the resolution of apparent (if not actual) conflicts of intent between the
+network's operator and the path selection at an endpoint. It will also need
+set of safety principles to ensure that increasing path control does not lead
+to decreasing connectivity; one such safety principle could be "the existence
+of at least one path between two endpoints guarantees the selection of at
+least one path between those endpoints."<a href="#section-2.7-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="deploying-a-path-aware-network">
+<section id="section-2.8">
+        <h3 id="name-deploying-a-path-aware-netw">
+<a href="#section-2.8" class="section-number selfRef">2.8. </a><a href="#name-deploying-a-path-aware-netw" class="section-name selfRef">Deploying a Path Aware Network</a>
+        </h3>
+<p id="section-2.8-1">The eighth question: how can the incentives of network operators and end-users
+be aligned to realize the vision of path aware networking, and how can the
+transition from current ("path-oblivious") to path-aware networking be managed?<a href="#section-2.8-1" class="pilcrow">¶</a></p>
+<p id="section-2.8-2">The vision presented in the introduction discusses path aware networking from
+the point of view of the benefits accruing at the endpoints, to designers of
+transport protocols and applications as well as to the end users of those
+applications. However, this vision requires action not only at the endpoints but
+also within the interconnected networks offering path aware connectivity. While
+the specific actions required are a matter of the design and implementation of a
+specific realization of a path aware protocol stack, it is clear than any path
+aware architecture will require network operators to give up some control of
+their networks over to endpoint-driven control inputs.<a href="#section-2.8-2" class="pilcrow">¶</a></p>
+<p id="section-2.8-3">Here the question of apparent versus actual conflicts of intent arises again:
+certain network operations requirements may appear essential, but are merely
+accidents of the interfaces provided by current routing and management
+protocols. For example, related (but adjacent) to path aware networking, the
+widespread use of the TCP wire image <span>[<a href="#RFC8546" class="xref">RFC8546</a>]</span> in network monitoring for DDoS
+prevention appears in conflict with the deployment of encrypted transports, only
+because path signaling <span>[<a href="#RFC8558" class="xref">RFC8558</a>]</span> has been implicit in the deployment of past
+transport protocols.<a href="#section-2.8-3" class="pilcrow">¶</a></p>
+<p id="section-2.8-4">Similarly, incentives for deployment must show how existing network operations
+requirements are met through new path selection and property dissemination
+mechanisms.<a href="#section-2.8-4" class="pilcrow">¶</a></p>
+<p id="section-2.8-5">The incentives for network operators and equipment vendors need to be made
+clear, in terms of a plan to transition <span>[<a href="#RFC8170" class="xref">RFC8170</a>]</span> an internetwork to
+path-aware operation, one network and facility at a time. This plan to
+transition must also take into account that the dynamics of path aware
+networking early in this transition (when few endpoints and flows in the
+Internet use path selection) may be different than those later in the
+transition.<a href="#section-2.8-5" class="pilcrow">¶</a></p>
+<p id="section-2.8-6">Aspects of data security and information management in a network that explicitly
+radiates more information about the network's deployment and configuration, and
+implicitly radiates information about endpoint configuration and preference
+through path selection, must also be addressed.<a href="#section-2.8-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="acknowledgments">
+<section id="section-3">
+      <h2 id="name-acknowledgments">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
+      </h2>
+<p id="section-3-1">Many thanks to Adrian Perrig, Jean-Pierre Smith, Mirja Kuehlewind, Olivier
+Bonaventure, Martin Thomson, Shwetha Bhandari, Chris Wood, Lee Howard, Mohamed
+Boucadair, Thorben Krueger, Gorry Fairhurst, Spencer Dawkins, Reese Enghardt,
+Laurent Ciavaglia, Stephen Farrell, and Richard Yang, for discussions
+leading to questions in this document, and for feedback on the document itself.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">This work is partially supported by the European Commission under Horizon 2020
+grant agreement no. 688421 Measurement and Architecture for a Middleboxed
+Internet (MAMI), and by the Swiss State Secretariat for Education, Research, and
+Innovation under contract no. 15.0268. This support does not imply endorsement.<a href="#section-3-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<section id="section-4">
+      <h2 id="name-informative-references">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+      </h2>
+<dl class="references">
+<dt id="RFC4302">[RFC4302]</dt>
+      <dd>
+<span class="refAuthor">Kent, S.</span>, <span class="refTitle">"IP Authentication Header"</span>, <span class="seriesInfo">RFC 4302</span>, <span class="seriesInfo">DOI 10.17487/RFC4302</span>, <time datetime="2005-12" class="refDate">December 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4302">https://www.rfc-editor.org/rfc/rfc4302</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC4655">[RFC4655]</dt>
+      <dd>
+<span class="refAuthor">Farrel, A.</span>, <span class="refAuthor">Vasseur, J.-P.</span>, and <span class="refAuthor">J. Ash</span>, <span class="refTitle">"A Path Computation Element (PCE)-Based Architecture"</span>, <span class="seriesInfo">RFC 4655</span>, <span class="seriesInfo">DOI 10.17487/RFC4655</span>, <time datetime="2006-08" class="refDate">August 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4655">https://www.rfc-editor.org/rfc/rfc4655</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7285">[RFC7285]</dt>
+      <dd>
+<span class="refAuthor">Alimi, R., Ed.</span>, <span class="refAuthor">Penno, R., Ed.</span>, <span class="refAuthor">Yang, Y., Ed.</span>, <span class="refAuthor">Kiesel, S.</span>, <span class="refAuthor">Previdi, S.</span>, <span class="refAuthor">Roome, W.</span>, <span class="refAuthor">Shalunov, S.</span>, and <span class="refAuthor">R. Woundy</span>, <span class="refTitle">"Application-Layer Traffic Optimization (ALTO) Protocol"</span>, <span class="seriesInfo">RFC 7285</span>, <span class="seriesInfo">DOI 10.17487/RFC7285</span>, <time datetime="2014-09" class="refDate">September 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7285">https://www.rfc-editor.org/rfc/rfc7285</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7624">[RFC7624]</dt>
+      <dd>
+<span class="refAuthor">Barnes, R.</span>, <span class="refAuthor">Schneier, B.</span>, <span class="refAuthor">Jennings, C.</span>, <span class="refAuthor">Hardie, T.</span>, <span class="refAuthor">Trammell, B.</span>, <span class="refAuthor">Huitema, C.</span>, and <span class="refAuthor">D. Borkmann</span>, <span class="refTitle">"Confidentiality in the Face of Pervasive Surveillance: A Threat Model and Problem Statement"</span>, <span class="seriesInfo">RFC 7624</span>, <span class="seriesInfo">DOI 10.17487/RFC7624</span>, <time datetime="2015-08" class="refDate">August 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7624">https://www.rfc-editor.org/rfc/rfc7624</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8170">[RFC8170]</dt>
+      <dd>
+<span class="refAuthor">Thaler, D., Ed.</span>, <span class="refTitle">"Planning for Protocol Adoption and Subsequent Transitions"</span>, <span class="seriesInfo">RFC 8170</span>, <span class="seriesInfo">DOI 10.17487/RFC8170</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8170">https://www.rfc-editor.org/rfc/rfc8170</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8446">[RFC8446]</dt>
+      <dd>
+<span class="refAuthor">Rescorla, E.</span>, <span class="refTitle">"The Transport Layer Security (TLS) Protocol Version 1.3"</span>, <span class="seriesInfo">RFC 8446</span>, <span class="seriesInfo">DOI 10.17487/RFC8446</span>, <time datetime="2018-08" class="refDate">August 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8446">https://www.rfc-editor.org/rfc/rfc8446</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8546">[RFC8546]</dt>
+      <dd>
+<span class="refAuthor">Trammell, B.</span> and <span class="refAuthor">M. Kuehlewind</span>, <span class="refTitle">"The Wire Image of a Network Protocol"</span>, <span class="seriesInfo">RFC 8546</span>, <span class="seriesInfo">DOI 10.17487/RFC8546</span>, <time datetime="2019-04" class="refDate">April 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8546">https://www.rfc-editor.org/rfc/rfc8546</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8558">[RFC8558]</dt>
+    <dd>
+<span class="refAuthor">Hardie, T., Ed.</span>, <span class="refTitle">"Transport Protocol Path Signals"</span>, <span class="seriesInfo">RFC 8558</span>, <span class="seriesInfo">DOI 10.17487/RFC8558</span>, <time datetime="2019-04" class="refDate">April 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8558">https://www.rfc-editor.org/rfc/rfc8558</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+<div id="authors-addresses">
+<section id="appendix-A">
+      <h2 id="name-authors-address">
+<a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Brian Trammell</span></div>
+<div dir="auto" class="left"><span class="org">Google Switzerland GmbH</span></div>
+<div dir="auto" class="left"><span class="street-address">Gustav-Gull-Platz 1</span></div>
+<div dir="auto" class="left">CH- <span class="locality">8004 Zurich</span>
+</div>
+<div dir="auto" class="left"><span class="country-name">Switzerland</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:ietf@trammell.ch" class="email">ietf@trammell.ch</a>
+</div>
+</address>
+</section>
+</div>
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
+</script>
+</body>
+</html>

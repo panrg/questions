@@ -4,8 +4,8 @@
 
 Path Aware Networking RG                                     B. Trammell
 Internet-Draft                                   Google Switzerland GmbH
-Intended status: Informational                           13 October 2021
-Expires: 16 April 2022
+Intended status: Informational                           25 January 2022
+Expires: 29 July 2022
 
 
             Current Open Questions in Path Aware Networking
@@ -52,11 +52,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 16 April 2022.
+   This Internet-Draft will expire on 29 July 2022.
 
 Copyright Notice
 
-   Copyright (c) 2021 IETF Trust and the persons identified as the
+   Copyright (c) 2022 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -64,9 +64,9 @@ Copyright Notice
    license-info) in effect on the date of publication of this document.
    Please review these documents carefully, as they describe your rights
    and restrictions with respect to this document.  Code Components
-   extracted from this document must include Simplified BSD License text
-   as described in Section 4.e of the Trust Legal Provisions and are
-   provided without warranty as described in the Simplified BSD License.
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
 
 Table of Contents
 
@@ -93,29 +93,30 @@ Table of Contents
    unverifiable, best-effort service to the endpoints using it.  While
    there are technologies that attempt better-than-best-effort delivery,
    the interfaces to these are generally administrative as opposed to
-   endpoint-exposed (e.g.  PCE [RFC4655] and SD-WAN approaches), and
-   they are often restricted to single administrative domains.  In this
+   endpoint-exposed (e.g.  Path Computation Element (PCE) [RFC4655] and
+   Software-Defined Wide Area Network (SD-WAN) approaches), and they are
+   often restricted to single administrative domains.  In this
    environment, an application can assume that a packet with a given
    destination address will eventually be forwarded toward that
    destination, but little else.
 
    A transport layer protocol such as TCP can provide reliability over
    this best-effort service, and a protocol above the network layer such
-   as IPsec AH [RFC4302] or TLS [RFC8446] can authenticate the remote
-   endpoint.  However, little, if any, explicit information about the
-   path is available to the endpoint, and assumptions about that path
-   often do not hold, sometimes with serious impacts on the application,
-   as in the case with BGP hijacking attacks.
+   as Transport Layer Security (TLS) [RFC8446] can authenticate the
+   remote endpoint.  However, little, if any, explicit information about
+   the path is available to the endpoint, and assumptions about that
+   path often do not hold, sometimes with serious impacts on the
+   application, as in the case with BGP hijacking attacks.
 
    By contrast, in a path-aware internetworking architecture, endpoints
    have the ability to select or influence the path through the network
    used by any given packet or flow.  The network and transport layers
    explicitly expose information about the path or paths available from
    one endpoint to another, and to those endpoints and the applications
-   running on them, so that they can make this selection.  The ALTO
-   protocol [RFC7285] can be seen as an example of a path-awareness
-   approach implemented in transport-layer terms on the present Internet
-   protocol stack.
+   running on them, so that they can make this selection.  The
+   Application Layer Traffic Optimization (ALTO) protocol [RFC7285] can
+   be seen as an example of a path-awareness approach implemented in
+   transport-layer terms on the present Internet protocol stack.
 
    Path selection provides explicit visibility and control of network
    treatment to applications and users of the network.  This selection
@@ -424,43 +425,39 @@ Table of Contents
 
 4.  Informative References
 
-   [RFC4302]  Kent, S., "IP Authentication Header", RFC 4302,
-              DOI 10.17487/RFC4302, December 2005,
-              <https://datatracker.ietf.org/doc/html/rfc4302>.
-
    [RFC4655]  Farrel, A., Vasseur, J.-P., and J. Ash, "A Path
               Computation Element (PCE)-Based Architecture", RFC 4655,
               DOI 10.17487/RFC4655, August 2006,
-              <https://datatracker.ietf.org/doc/html/rfc4655>.
+              <https://www.rfc-editor.org/rfc/rfc4655>.
 
    [RFC7285]  Alimi, R., Ed., Penno, R., Ed., Yang, Y., Ed., Kiesel, S.,
               Previdi, S., Roome, W., Shalunov, S., and R. Woundy,
               "Application-Layer Traffic Optimization (ALTO) Protocol",
               RFC 7285, DOI 10.17487/RFC7285, September 2014,
-              <https://datatracker.ietf.org/doc/html/rfc7285>.
+              <https://www.rfc-editor.org/rfc/rfc7285>.
 
    [RFC7624]  Barnes, R., Schneier, B., Jennings, C., Hardie, T.,
               Trammell, B., Huitema, C., and D. Borkmann,
               "Confidentiality in the Face of Pervasive Surveillance: A
               Threat Model and Problem Statement", RFC 7624,
               DOI 10.17487/RFC7624, August 2015,
-              <https://datatracker.ietf.org/doc/html/rfc7624>.
+              <https://www.rfc-editor.org/rfc/rfc7624>.
 
    [RFC8170]  Thaler, D., Ed., "Planning for Protocol Adoption and
               Subsequent Transitions", RFC 8170, DOI 10.17487/RFC8170,
-              May 2017, <https://datatracker.ietf.org/doc/html/rfc8170>.
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8170>.
 
    [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
-              <https://datatracker.ietf.org/doc/html/rfc8446>.
+              <https://www.rfc-editor.org/rfc/rfc8446>.
 
    [RFC8546]  Trammell, B. and M. Kuehlewind, "The Wire Image of a
               Network Protocol", RFC 8546, DOI 10.17487/RFC8546, April
-              2019, <https://datatracker.ietf.org/doc/html/rfc8546>.
+              2019, <https://www.rfc-editor.org/rfc/rfc8546>.
 
    [RFC8558]  Hardie, T., Ed., "Transport Protocol Path Signals",
               RFC 8558, DOI 10.17487/RFC8558, April 2019,
-              <https://datatracker.ietf.org/doc/html/rfc8558>.
+              <https://www.rfc-editor.org/rfc/rfc8558>.
 
 Author's Address
 

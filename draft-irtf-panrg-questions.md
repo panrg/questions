@@ -47,32 +47,33 @@ current thinking in this space.
 
 # Introduction to Path-Aware Networking {#intro}
 
-In the current Internet architecture, the network layer provides an
-unverifiable, best-effort service to the endpoints using it. While there are
+In the current Internet architecture, the network layer provides a 
+best-effort service to the endpoints using it, without verifiability of the
+properties of the path between tne endpoints. While there are network layer
 technologies that attempt better-than-best-effort delivery, the interfaces to
 these are generally administrative as opposed to endpoint-exposed (e.g. Path 
 Computation Element (PCE) {{?RFC4655}} and Software-Defined Wide Area Network 
 (SD-WAN) approaches), and they are often restricted to single
-administrative domains. In this environment, an application can assume that a
+administrative domains. In this architecture, an application can assume that a
 packet with a given destination address will eventually be forwarded toward that
 destination, but little else.
 
 A transport layer protocol such as TCP can provide reliability over this
-best-effort service, and a protocol above the network layer such as
+best-effort service, and a protocol above the network layer, such as
 Transport Layer Security (TLS) {{?RFC8446}} can authenticate the remote
-endpoint. However, little, if any, explicit information about the path is
-available to the endpoint, and assumptions about that path often do not hold,
-sometimes with serious impacts on the application, as in the case with BGP
-hijacking attacks.
+endpoint. However, little, if any, explicit information about the path
+is available to the endpoints, and any assumptions made about that path
+often do not hold.  These sometimes have serious impacts on the application,
+as in the case with BGP hijacking attacks.
 
-By contrast, in a path-aware internetworking architecture, endpoints have the
-ability to select or influence the path through the network used by any given
+By contrast, in a path-aware internetworking architecture, endpoints can
+select or influence the path(s) through the network used by any given
 packet or flow. The network and transport layers explicitly expose information
-about the path or paths available from one endpoint to another, and to those
-endpoints and the applications running on them, so that they can make this
-selection. The Application Layer Traffic Optimization (ALTO) protocol {{?RFC7285}}
-can be seen as an example of a path-awareness approach implemented in 
-transport-layer terms on the present Internet protocol stack.
+about the path or paths available to the endpoints and to the applications
+running on them, so that they can make this selection. The Application Layer
+Traffic Optimization (ALTO) protocol {{?RFC7285}} can be seen as an example
+of a path-awareness approach implemented in transport-layer terms on the
+present Internet protocol stack.
 
 Path selection provides explicit visibility and control of network treatment to
 applications and users of the network. This selection is available to the
@@ -99,7 +100,7 @@ is published to further frame discussions within and outside the Path Aware
 Networking Research Group, and is published with the rough consensus of that
 group.
 
-## Definition
+## Definitions
 
 For purposes of this document, "path aware networking" describes endpoint
 discovery of the properties of paths they use for communication across an
@@ -122,7 +123,7 @@ is intended to pose questions rather than answer them, it assumes that this
 definition will be refined as part of the answer the first two questions it
 poses, about the vocabulary of path properties and how they are disseminated.
 
-Research into path aware networking covers any and all aspects of
+Research into path aware internetworking covers any and all aspects of
 designing, building, and operating path aware internetworks or the networks
 and endpoints attached to them. This document presents a collection of
 research questions to address in order to make a path aware Internet a
@@ -148,9 +149,9 @@ subpaths of a path. These properties may be relatively static, such as the
 presence of a given node or service function on the path; as well as relatively
 dynamic, such as the current values of metrics such as loss and latency.
 
-This vocabulary must be defined carefully, as its design will have impacts on
-the expressiveness of a given path-aware internetworking architecture. This
-expressiveness also exhibits tradeoffs. For example, a system that exposes
+This vocabulary and its representation must be defined carefully, as its design 
+will have impacts on the properties (e.g., expressiveness, scalability, security)
+of a given path-aware internetworking architecture. For example, a system that exposes
 node-level information for the topology through each network would maximize
 information about the individual components of the path at the endpoints, at
 the expense of making internal network topology universally public, which may
@@ -167,8 +168,8 @@ useful, and trustworthy path properties?
 
 Once endpoints and networks have a shared vocabulary for expressing path
 properties, the network must have some method for distributing those path
-properties to the endpoint. Regardless of how path property information is
-distributed to the endpoints, the endpoints require a method to authenticate
+properties to the endpoints. Regardless of how path property information is
+distributed, the endpoints require a method to authenticate
 the properties -- to determine that they originated from and pertain to the
 path that they purport to.
 
@@ -338,9 +339,9 @@ through path selection, must also be addressed.
 
 Many thanks to Adrian Perrig, Jean-Pierre Smith, Mirja Kuehlewind, Olivier
 Bonaventure, Martin Thomson, Shwetha Bhandari, Chris Wood, Lee Howard, Mohamed
-Boucadair, Thorben Krueger, Gorry Fairhurst, Spencer Dawkins, Theresa Enghardt,
-Laurent Ciavaglia, and Stephen Farrell, for discussions leading to questions
-in this document, and for feedback on the document itself.
+Boucadair, Thorben Krueger, Gorry Fairhurst, Spencer Dawkins, Reese Enghardt,
+Laurent Ciavaglia, Stephen Farrell, and Richard Yang, for discussions
+leading to questions in this document, and for feedback on the document itself.
 
 This work is partially supported by the European Commission under Horizon 2020
 grant agreement no. 688421 Measurement and Architecture for a Middleboxed
